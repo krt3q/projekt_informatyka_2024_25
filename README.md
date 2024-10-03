@@ -1,2 +1,2 @@
 Jakub Trzeciak
-Tytu³ projektu
+Tytul projektu
