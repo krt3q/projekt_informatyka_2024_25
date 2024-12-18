@@ -11,14 +11,19 @@
 
 int main()
 {
-
+	sf::Vector2f wektorpomocniczy;
+	wektorpomocniczy.x = 100;
+	wektorpomocniczy.y = 100;
+	/*sf::Vector2f Rozmiarokna;
+	Rozmiarokna.x = 1000;
+	Rozmiarokna.y = 800;*/
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
-	Plansza plansza(800, 400);
+	Plansza plansza(800, 400, 100, 200);
 
-	sf::RectangleShape kulko;
-	kulko.setPosition(sf::Vector2f(830.f, 30.f));
-	kulko.setSize(sf::Vector2f(100,100));
+	/*sf::RectangleShape kulko;
+	kulko.setPosition(sf::Vector2f(830.f, 30.f));*/
+
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -29,7 +34,7 @@ int main()
 		}
 		window.clear();
 		window.draw(plansza.getPlansza_1());
-		window.draw(kulko);
+		window.draw(plansza.getPlansza_2());
 		window.display();
 	}
 
