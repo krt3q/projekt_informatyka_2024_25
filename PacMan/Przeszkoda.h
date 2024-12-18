@@ -2,11 +2,11 @@
 class Przeszkoda
 {
 private:
-
+	
 
 
 public:
-
+	
 
 
 };

@@ -1,6 +1,9 @@
 #include <iostream>
 #include <random>
 #include <SFML/Graphics.hpp>
+#include "Pacman.h"
+#include "Przeszkoda.h"
+#include "Plansza.h"
 
 
 
@@ -10,8 +13,12 @@ int main()
 {
 
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+
+	Plansza plansza(800, 400);
+
+	sf::RectangleShape kulko;
+	kulko.setPosition(sf::Vector2f(830.f, 30.f));
+	kulko.setSize(sf::Vector2f(100,100));
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -21,7 +28,8 @@ int main()
 				window.close();
 		}
 		window.clear();
-		window.draw(shape);
+		window.draw(plansza.getPlansza_1());
+		window.draw(kulko);
 		window.display();
 	}
 
