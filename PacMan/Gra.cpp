@@ -19,8 +19,8 @@ int main()
 	Rozmiarokna.y = 800;*/
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
 
-	Plansza plansza(800, 400, 100, 200);
-
+	//Plansza plansza(800, 400, 100, 200);
+	Plansza plansza(1, 2, 3, 4);
 	/*sf::RectangleShape kulko;
 	kulko.setPosition(sf::Vector2f(830.f, 30.f));*/
 
@@ -33,8 +33,12 @@ int main()
 				window.close();
 		}
 		window.clear();
-		window.draw(plansza.getPlansza_1());
-		window.draw(plansza.getPlansza_2());
+		//window.draw(plansza.getPlansza_1());
+		//window.draw(plansza.getPlansza_2());
+		sf::RectangleShape* wsk = plansza.getPlansza();
+		for (int i = 0; i < 16; i++) {
+			window.draw(wsk[i]);
+		}
 		window.display();
 	}
 
