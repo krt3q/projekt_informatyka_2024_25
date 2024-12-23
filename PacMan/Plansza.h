@@ -60,13 +60,14 @@ public:
 		//Ramka_wewn.setOutlineColor(sf::Color::Blue);
 
 		int a = 0;
-		int MAPA[4][4] = { {1,1,0,0},
-						   {0,0,0,0},
-						   {1,0,0,1},
+		int MAPA[4][4] = { {0,1,0,0},
+						   {0,0,1,0},
+						   {1,0,1,1},
 					       {0,0,1,0} };
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (MAPA[i][j] == 1) {
+					//new sf::RectangleShape = pole[a];
 					pole[a].setSize(sf::Vector2f(100, 100));
 					pole[a].setPosition(200 + j * 100, 200 + i * 100);
 					pole[a].setFillColor(sf::Color::Blue);

@@ -37,7 +37,7 @@ int main()
 		//window.draw(plansza.getPlansza_2());
 		sf::RectangleShape* wsk = plansza.getPlansza();
 		for (int i = 0; i < 16; i++) {
-			window.draw(wsk[i]);
+			window.draw(wsk[i]); 
 		}
 		window.display();
 	}
