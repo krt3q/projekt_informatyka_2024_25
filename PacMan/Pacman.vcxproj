@@ -145,6 +145,7 @@
     <ClCompile Include="Gra.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Nagłówek.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Plansza.h" />
     <ClInclude Include="Przeszkoda.h" />
