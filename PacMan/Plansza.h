@@ -8,7 +8,7 @@ private:
 	sf::Vector2f Rozmiar_c; //Wspó³rzêdne wewnêtrznej  ramki
 	sf::ConvexShape Ramka_wewn;
 	sf::RectangleShape Ramka_zewn;
-	sf::RectangleShape pole[16];
+	sf::RectangleShape pole[64];
 public:
 	Plansza(float xr, float yr, float xp, float yp) {
 
@@ -60,12 +60,26 @@ public:
 		//Ramka_wewn.setOutlineColor(sf::Color::Blue);
 
 		int a = 0;
-		int MAPA[4][4] = { {0,1,0,0},
-						   {0,0,1,0},
-						   {1,0,1,1},
-					       {0,0,1,0} };
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		int MAPA[8][8] = { {1,0,1,0,1,0,1,0},
+						   {1,1,1,0,1,0,1,0},
+						   {1,0,1,0,1,0,1,0},
+						   {1,0,1,0,1,0,1,0},
+						   {1,0,1,0,1,0,1,0},
+						   {1,0,1,0,1,0,1,0},
+						   {1,0,1,0,1,0,1,0},
+					       {0,0,1,0,1,0,1,0} };
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				/*if (i == 0) {
+					if (j == 2 || j == 3) {
+						sf::Vertex* linie = new sf::Vertex[2];
+						linie[0].position = sf::Vector2f(200 + j * 100, 200+i*100);
+						linie[0].color = sf::Color::Red;
+						linie[1].position = sf::Vector2f(300 + j * 100, 200 + i * 100);
+						linie[1].color = sf::Color::Red;
+						delete linie;
+					}
+				}*/
 				if (MAPA[i][j] == 1) {
 					//new sf::RectangleShape = pole[a];
 					pole[a].setSize(sf::Vector2f(100, 100));
@@ -97,5 +111,7 @@ public:
 	sf::RectangleShape* getPlansza() {
 		return pole;
 	}
-
+	sf::RectangleShape* getRamka() {
+		//return lini;
+	}
 };

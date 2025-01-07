@@ -17,7 +17,7 @@ int main()
 	/*sf::Vector2f Rozmiarokna;
 	Rozmiarokna.x = 1000;
 	Rozmiarokna.y = 800;*/
-	sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(1500, 1300), "SFML works!");
 
 	//Plansza plansza(800, 400, 100, 200);
 	Plansza plansza(1, 2, 3, 4);
@@ -36,7 +36,7 @@ int main()
 		//window.draw(plansza.getPlansza_1());
 		//window.draw(plansza.getPlansza_2());
 		sf::RectangleShape* wsk = plansza.getPlansza();
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < 64; i++) {
 			window.draw(wsk[i]); 
 		}
 		window.display();
