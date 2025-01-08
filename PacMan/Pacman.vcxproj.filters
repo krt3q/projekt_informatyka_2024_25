@@ -33,4 +33,9 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Pacman.png">
+      <Filter>Pliki nagłówkowe</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

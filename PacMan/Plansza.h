@@ -49,7 +49,7 @@ public:
 		}
 	}
 
-
+	
 	//Zwracanie Planszy Test
 	sf::RectangleShape* getPlansza() {
 		return pole;

@@ -151,6 +151,9 @@
     <ClInclude Include="Plansza.h" />
     <ClInclude Include="Przeszkoda.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Pacman.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
