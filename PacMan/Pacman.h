@@ -58,7 +58,7 @@ public:
 		
 	}
 	void animuj(sf::Event event) {
-		if (event.type == sf::Event::KeyPressed)
+		/*if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::W)
 			{
@@ -96,10 +96,13 @@ public:
 		else
 			ksztaltPacmana.top += 50;
 
-		Pacman_S.setTextureRect(ksztaltPacmana);
+		Pacman_S.setTextureRect(ksztaltPacmana);*/
 	}
 	sf::Sprite getPacman() {
 		return Pacman_S;
+	}
+	sf::IntRect ksztaltpacmana(){
+		return ksztaltPacmana;
 	}
 };
 
