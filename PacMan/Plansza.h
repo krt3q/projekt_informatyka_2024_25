@@ -1,68 +1,60 @@
 #pragma once
 #include <random>
+#include <vector>
+#include <iostream>
 std::random_device dev;
 std::mt19937 rng(dev());
-std::uniform_int_distribution<std::mt19937::result_type> dist6(0,1);
+std::uniform_int_distribution<std::mt19937::result_type> dist(0,6);
 class Plansza {
 private:
 	sf::Vector2f Rozmiar;
-	sf::Vector2f Pozycja_z;
-	sf::Vector2f Pozycja_w;
-	sf::Vector2f Rozmiar_c; //Wspó³rzêdne wewnêtrznej  ramki
-	sf::ConvexShape Ramka_wewn;
-	sf::RectangleShape Ramka_zewn;
-	sf::RectangleShape pole[64];
-	sf::Vertex Ramka[100];
-	//std::vector <sf::Vertex> linie;
+	sf::RectangleShape pole[1000];
+	sf::RectangleShape Ramka;
 public:
-	Plansza(int xr, int yr) {
-
+	Plansza(int yr, int xr) {
 		
+		Ramka.setPosition(200, 200);
+		Ramka.setSize(sf::Vector2f(50 * yr, 50 * xr));
+		Ramka.setOutlineColor(sf::Color::Blue);
+		Ramka.setOutlineThickness(3);
+		Ramka.setFillColor(sf::Color::Transparent);
 		int a = 0;
 		int b = 0;
-		for (int i = 0; i < yr; i++) {
-			for (int j = 0; j < xr; j++) {
-				int* MAPA = new int[xr];
-				srand((unsigned)time(0));
-				MAPA[j] = dist6(rng);
-				std::cout << MAPA[j];
+		std::vector<std::vector<int>> tablica(xr, std::vector<int>(yr));
+		for (int i = 0; i < xr; i++) {
+			for (int j = 0; j < yr; j++) {
+				tablica[i][j] = dist(rng);
+				//if (tablica[i][j - 1] == 6 /*&& tablica[i][j - 2] == 6*/) {
+				//		tablica[i][j] = 0;
+				//}
 			}
-			std::cout << std::endl;
 		}
-		
 
 		for (int i = 0; i < xr; i++) {
 			for (int j = 0; j < yr; j++) {
-				
-				if ([i] == 1) {
+				if (tablica[i][j] == 6) {
 					//new sf::RectangleShape = pole[a];
-					pole[a].setSize(sf::Vector2f(100, 100));
-					pole[a].setPosition(200 + j * 100, 200 + i * 100);
-					pole[a].setFillColor(sf::Color::Green);
+					pole[a].setSize(sf::Vector2f(50, 50));
+					pole[a].setPosition(200 + j * 50, 200 + i * 50);
+					pole[a].setFillColor(sf::Color::Cyan);
 					a++;
 				}
-				if (MAPAy[i] == 0) {
-					pole[a].setSize(sf::Vector2f(100, 100));
-					pole[a].setPosition(200 + j * 100, 200 + i * 100);
-					pole[a].setFillColor(sf::Color::White);
+				else {
+					pole[a].setSize(sf::Vector2f(50, 50));
+					pole[a].setPosition(200 + j * 50, 200 + i * 50);
+					pole[a].setFillColor(sf::Color::Transparent);
 					a++;
 				}
 			}
 		}
 	}
 
-	//Zwracanie Ramki zewnêtrznej
-	sf::RectangleShape getPlansza_1() {
-		return Ramka_zewn;
-	}
-
-	//Zwracanie Ramki Wewnêtrznej
-	sf::ConvexShape getPlansza_2() {
-		return Ramka_wewn;
-	}
 
 	//Zwracanie Planszy Test
 	sf::RectangleShape* getPlansza() {
 		return pole;
+	}
+	sf::RectangleShape getRamka() {
+		return Ramka;
 	}
 };

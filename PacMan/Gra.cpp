@@ -10,16 +10,17 @@
 
 int main()
 {
-	sf::Vector2f wektorpomocniczy;
-	wektorpomocniczy.x = 100;
-	wektorpomocniczy.y = 100;
+	
 	/*sf::Vector2f Rozmiarokna;
 	Rozmiarokna.x = 1000;
 	Rozmiarokna.y = 800;*/
-	sf::RenderWindow window(sf::VideoMode(1500, 1300), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(1300, 1000), "SFML works!");
 
 	//Plansza plansza(800, 400, 100, 200);
-	Plansza plansza(8,4);
+	int a = 20;
+	int b = 10;
+	Plansza plansza(a,b);
+	
 	/*sf::RectangleShape kulko;
 	kulko.setPosition(sf::Vector2f(830.f, 30.f));*/
 
@@ -35,13 +36,10 @@ int main()
 		//window.draw(plansza.getPlansza_1());
 		//window.draw(plansza.getPlansza_2());
 		sf::RectangleShape* pola = plansza.getPlansza();
-		for (int i = 0; i < 64; i++) {
+		for (int i = 0; i < a*b; i++) {
 			window.draw(pola[i]); 
 		}
-		/*sf::Vertex* ramka = plansza.getRamka();
-		for (int i = 0; i < 64; i++) {
-			window.draw(ramka, 2, sf::Lines);
-		}*/
+		window.draw(plansza.getRamka());
 		window.display();
 	}
 
