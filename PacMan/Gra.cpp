@@ -19,7 +19,6 @@ int main()
 	int koniecSprite = 100;
 
 	Plansza plansza(a,b);
-	//Pacman pacman(5);
 
 	sf::RectangleShape* pola = plansza.getPlansza();
 
@@ -27,10 +26,10 @@ int main()
 
 	int flaga;
 
-	sf::Texture tekstura;
-	sf::IntRect ksztaltPacmana(0, 0, 40, 40);
-	tekstura.loadFromFile("Pacman.png");
-	sf::Sprite Pacman(tekstura, ksztaltPacmana);
+	sf::IntRect ksztaltPacmana(0,0,40,40);
+
+	Pacman pacman(a,b);
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
@@ -39,6 +38,7 @@ int main()
 				window.close();
 			if (event.type == sf::Event::KeyPressed)
 			{
+				std::cout << "a";
 				if (event.key.code == sf::Keyboard::W)
 				{
 					poczatekSprite = 450;
@@ -68,19 +68,16 @@ int main()
 		}
 		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 				
-			if (ksztaltPacmana.top == koniecSprite)
-				ksztaltPacmana.top = poczatekSprite;
-			else
-				ksztaltPacmana.top += 50;
-			Pacman.setTextureRect(ksztaltPacmana);
+			pacman.animuj();
 			zegar.restart();
 		}
+		pacman.poruszanie();
 		window.clear();
 		for (int i = 0; i < a * b; i++) {
 			window.draw(pola[i]);
 		}
 		window.draw(plansza.getRamka());
-		window.draw(Pacman);
+		window.draw(pacman.getPacman());
 		window.display();
 	}
 
