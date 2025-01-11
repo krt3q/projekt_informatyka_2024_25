@@ -30,10 +30,11 @@ public:
 
 	
 	void poruszanie() {
-		float vel = 0.2;
+		sf::Clock zegar;
+		float vel = 0.1;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
-			pozycja = Pacman_S.getPosition();
+			Pacman_S.setPosition(Pacman_S.getPosition().x, Pacman_S.getPosition().y - 0.1);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
