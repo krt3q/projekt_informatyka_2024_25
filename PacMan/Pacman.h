@@ -12,6 +12,8 @@ private:
 	//sf::Event event;
 	sf::Texture tekstura;
 	sf::IntRect ksztaltPacmana;
+	int klawisz;
+	int kol;
 public:
 	Pacman(int a, int b) {
 		if (!tekstura.loadFromFile("Pacman.png"))
@@ -32,30 +34,36 @@ public:
 	void poruszanie() {
 		sf::Clock zegar;
 		float vel = 0.1;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			Pacman_S.setPosition(Pacman_S.getPosition().x, Pacman_S.getPosition().y - 0.1);
+			if (kol != 1)
+				Pacman_S.move(0, -vel);
+			else
+				NULL;
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			Pacman_S.move(0, vel);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			Pacman_S.move(-vel, 0);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			Pacman_S.move(vel, 0);
 		}
 	}
 	void animuj() {
+		sf::Clock zegar;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			poczatekSprite = 450;
 			koniecSprite = 550;
 			ksztaltPacmana.top = poczatekSprite;
+			klawisz = 1;
+			
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -63,33 +71,38 @@ public:
 			poczatekSprite = 150;
 			koniecSprite = 250;
 			ksztaltPacmana.top = poczatekSprite;
+			klawisz = 2;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			poczatekSprite = 300;
 			koniecSprite = 400;
 			ksztaltPacmana.top = poczatekSprite;
+			klawisz = 3;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			poczatekSprite = 0;
 			koniecSprite = 100;
 			ksztaltPacmana.top = poczatekSprite;
+			klawisz = 4;
 		}
+		
 		if (ksztaltPacmana.top == koniecSprite) {
 			ksztaltPacmana.top = poczatekSprite;
 		}
 		else
 			ksztaltPacmana.top += 50;
-
 		Pacman_S.setTextureRect(ksztaltPacmana);
+		zegar.restart();
+		
 	}
 	sf::Vector2f pozycjaPacmana(int a, int b) {
 		std::vector<sf::RectangleShape> polapocz¹tkowe;
 		Plansza plansza(a, b);
 		sf::RectangleShape* pola = plansza.getPlansza();
 		for (int i = 0; i < a * b; i++) {
-			if (pola[i].getFillColor() != sf::Color::Cyan) {
+			if (pola[i].getFillColor() == sf::Color::Transparent) {
 				polapocz¹tkowe.push_back(pola[i]);
 			}
 		}
@@ -103,6 +116,30 @@ public:
 	}
 	sf::Sprite getPacman() {
 		return Pacman_S;
+	}
+	bool sprawdzenieKolizji(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
+		Plansza plansza(20, 10);
+		for (int i = 0; i < 20 * 10; i++) {
+			if (plansza.getPlansza()[i].getFillColor()==sf::Color::Cyan)
+				return pacman.getGlobalBounds().intersects(przeszkoda.getGlobalBounds());
+		}
+		return NULL;
+		
+	}
+	void kolizja(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
+		if (sprawdzenieKolizji(pacman, przeszkoda)) {
+			switch (klawisz) {
+			case 1:
+				kol = 1;
+				std::cout << "gej";
+			case 2:
+				kol = 2;
+			case 3:
+				kol = 3;
+			case 4:
+				kol = 4;
+			}
+		}
 	}
 	/*sf::IntRect ksztaltpacmana(){
 		return ksztaltPacmana;
