@@ -8,11 +8,11 @@ std::uniform_int_distribution<std::mt19937::result_type> dist(0,6);
 class Plansza {
 private:
 	sf::Vector2f Rozmiar;
-	sf::RectangleShape pole[1000];
+	sf::RectangleShape pole[500];
+	sf::RectangleShape przeszkoda[500];
 	sf::RectangleShape Ramka;
 public:
 	Plansza(int yr, int xr) {
-		
 		Ramka.setPosition(200, 200);
 		Ramka.setSize(sf::Vector2f(50 * yr, 50 * xr));
 		Ramka.setOutlineColor(sf::Color::Blue);
@@ -37,6 +37,8 @@ public:
 					pole[a].setSize(sf::Vector2f(50, 50));
 					pole[a].setPosition(200 + j * 50, 200 + i * 50);
 					pole[a].setFillColor(sf::Color::Cyan);
+					przeszkoda[b] = pole[a];
+					b++;
 					a++;
 				}
 				else {
@@ -56,5 +58,8 @@ public:
 	}
 	sf::RectangleShape getRamka() {
 		return Ramka;
+	}
+	sf::RectangleShape* getPrzeszkoda() {
+		return przeszkoda;
 	}
 };

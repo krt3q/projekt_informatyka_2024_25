@@ -72,7 +72,7 @@ int main()
 			zegar.restart();
 		}
 		for (int i = 0; i < a * b; i++) {
-			pacman.kolizja(pacman.getPacman(), pola[i]);
+			pacman.kolizja(pacman.getPacman(), plansza.getPrzeszkoda()[i]);
 		}
 		pacman.poruszanie();
 		window.clear();

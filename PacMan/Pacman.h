@@ -18,6 +18,7 @@ private:
 	//Zmienne do kolizji
 	int klawisz;
 	int kol;
+	sf::Vector2f vel;
 public:
 	//Konstruktor
 	Pacman(int a, int b) {
@@ -38,26 +39,36 @@ public:
 	//Poruszanie klawiatura
 	void poruszanie() {
 		sf::Clock zegar;
-		float vel = 0.1;
+		float velo = 0.1;
+		Plansza plansza(20, 10);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			if (kol != 1)
-				Pacman_S.move(0, -vel);
+			if (kol != 1 && (bool)(Pacman_S.getPosition().y > (float)plansza.getRamka().getPosition().y) == 1) {
+				Pacman_S.move(0, -velo);
+				kol = 0;
+			}
 			else
-				NULL;
+				Pacman_S.move(0, 0);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			Pacman_S.move(0, vel);
+			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y+50*10-40) == 1) {
+				Pacman_S.move(0, velo);
+				kol = 0;
+			}
+			else
+				Pacman_S.move(0, 0);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			Pacman_S.move(-vel, 0);
+			Pacman_S.move(-velo, 0);
+			kol = 0;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			Pacman_S.move(vel, 0);
+			Pacman_S.move(velo, 0);
+			kol = 0;
 		}
 	}
 
@@ -131,33 +142,25 @@ public:
 
 	//Sprawdzenie Kolizji, która zwraca 1 albo 0
 	bool sprawdzenieKolizji(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
-		Plansza plansza(20, 10);
-		for (int i = 0; i < 20 * 10; i++) {
-			if (plansza.getPlansza()[i].getFillColor() == sf::Color::Cyan)
-				std::cout << "kupa";
-				return pacman.getGlobalBounds().intersects(przeszkoda.getGlobalBounds());
-		}
-		return NULL;
-		
+		return pacman.getGlobalBounds().intersects(przeszkoda.getGlobalBounds());
 	}
-
-	//
 
 	//Je¿eli zaistnia³a kolizja to zmienia wartoœæ zmiennej kol w zale¿noœci od ostatniego wciœniêtego przycisku
 	void kolizja(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
+		//kol = 0;
 		if (sprawdzenieKolizji(pacman, przeszkoda)) {
-			switch (klawisz) {
-			case 1:
+			if (klawisz == 1)
 				kol = 1;
-				std::cout << "gej";
-			case 2:
+			if (klawisz == 2)
 				kol = 2;
-			case 3:
+			if (klawisz == 3)
 				kol = 3;
-			case 4:
+			if (klawisz == 4)
 				kol = 4;
-			}
 		}
+		/*if (!sprawdzenieKolizji(pacman, przeszkoda)) {
+			std::cout << "1";
+		}*/
 	}
 	/*sf::IntRect ksztaltpacmana(){
 		return ksztaltPacmana;
