@@ -67,13 +67,13 @@ int main()
 			}
 		}
 		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
-				
+
 			pacman.animuj();
 			zegar.restart();
 		}
-		/*for (int i = 0; i < a * b; i++) {
+		for (int i = 0; i < a * b; i++) {
 			pacman.kolizja(pacman.getPacman(), pola[i]);
-		}*/
+		}
 		pacman.poruszanie();
 		window.clear();
 		for (int i = 0; i < a * b; i++) {

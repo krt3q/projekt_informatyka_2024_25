@@ -4,17 +4,22 @@
 class Pacman
 {
 private:
-	//sf::CircleShape Pakman;
 	sf::Vector2f pozycja;
+
+	//Zmienne do animacji
 	int poczatekSprite;
 	int koniecSprite;
+
+	//Sprite
 	sf::Sprite Pacman_S;
-	//sf::Event event;
 	sf::Texture tekstura;
 	sf::IntRect ksztaltPacmana;
+
+	//Zmienne do kolizji
 	int klawisz;
 	int kol;
 public:
+	//Konstruktor
 	Pacman(int a, int b) {
 		if (!tekstura.loadFromFile("Pacman.png"))
 			std::cerr << "B³¹d";
@@ -30,7 +35,7 @@ public:
 		Pacman_S.setPosition(pozycjaPacmana(a,b));
 	}
 
-	
+	//Poruszanie klawiatura
 	void poruszanie() {
 		sf::Clock zegar;
 		float vel = 0.1;
@@ -55,6 +60,8 @@ public:
 			Pacman_S.move(vel, 0);
 		}
 	}
+
+	//Animacja + klawiatura
 	void animuj() {
 		sf::Clock zegar;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -97,6 +104,8 @@ public:
 		zegar.restart();
 		
 	}
+
+	//Zwracanie wektora losowej pozycji pocz¹tkowej Pacmana
 	sf::Vector2f pozycjaPacmana(int a, int b) {
 		std::vector<sf::RectangleShape> polapocz¹tkowe;
 		Plansza plansza(a, b);
@@ -114,18 +123,27 @@ public:
 		pozycja.y += 5;
 		return pozycja;
 	}
+
+	//Zwracanie Sprite
 	sf::Sprite getPacman() {
 		return Pacman_S;
 	}
+
+	//Sprawdzenie Kolizji, która zwraca 1 albo 0
 	bool sprawdzenieKolizji(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
 		Plansza plansza(20, 10);
 		for (int i = 0; i < 20 * 10; i++) {
-			if (plansza.getPlansza()[i].getFillColor()==sf::Color::Cyan)
+			if (plansza.getPlansza()[i].getFillColor() == sf::Color::Cyan)
+				std::cout << "kupa";
 				return pacman.getGlobalBounds().intersects(przeszkoda.getGlobalBounds());
 		}
 		return NULL;
 		
 	}
+
+	//
+
+	//Je¿eli zaistnia³a kolizja to zmienia wartoœæ zmiennej kol w zale¿noœci od ostatniego wciœniêtego przycisku
 	void kolizja(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
 		if (sprawdzenieKolizji(pacman, przeszkoda)) {
 			switch (klawisz) {
