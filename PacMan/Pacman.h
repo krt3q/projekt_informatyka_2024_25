@@ -127,9 +127,9 @@ public:
 	sf::Vector2f pozycjaPacmana(int a, int b) {
 		std::vector<sf::RectangleShape> polapocz¹tkowe;
 		Plansza plansza(a, b);
-		for (int i = 0; i < a * b; i++) {
-			if (plansza.getPlansza()[i].getFillColor() == sf::Color::Transparent) {
-				polapocz¹tkowe.push_back(plansza.getPlansza()[i]);
+		for (const auto&pole : plansza.getPlansza()) {
+			if (pole.getFillColor() == sf::Color::Transparent) {
+				polapocz¹tkowe.push_back(pole);
 			}
 		}
 		std::random_device dev;
@@ -153,7 +153,6 @@ public:
 
 	//Je¿eli zaistnia³a kolizja to zmienia wartoœæ zmiennej kol w zale¿noœci od ostatniego wciœniêtego przycisku
 	void kolizja(const sf::Sprite& pacman, const sf::RectangleShape& przeszkoda) {
-		//kol = 0;
 		if (sprawdzenieKolizji(pacman, przeszkoda)) {
 			if (klawisz == 1)
 				kol = 1;

@@ -20,7 +20,6 @@ int main()
 
 	Plansza plansza(a,b);
 
-	sf::RectangleShape* pola = plansza.getPlansza();
 
 	sf::Clock zegar;
 
@@ -70,13 +69,13 @@ int main()
 			pacman.animuj();
 			zegar.restart();
 		}
-		for (int i = 0; i < a * b; i++) {
-			pacman.kolizja(pacman.getPacman(), plansza.getPrzeszkoda()[i]);
+		for (const auto&przeszkoda : plansza.getPrzeszkoda()) {
+			pacman.kolizja(pacman.getPacman(), przeszkoda);
 		}
 		pacman.poruszanie();
 		window.clear();
-		for (int i = 0; i < a * b; i++) {
-			window.draw(pola[i]);
+		for (const auto&pole : plansza.getPlansza()) {
+			window.draw(pole);
 		}
 		window.draw(plansza.getRamka());
 		window.draw(pacman.getPacman());

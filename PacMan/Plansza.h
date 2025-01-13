@@ -8,10 +8,14 @@ std::uniform_int_distribution<std::mt19937::result_type> dist(0,6);
 class Plansza {
 private:
 	sf::Vector2f Rozmiar;
-	sf::RectangleShape pole[500];
-	sf::RectangleShape przeszkoda[500];
+	//sf::RectangleShape pole[500];
+	//sf::RectangleShape przeszkoda[500];
 	sf::RectangleShape Ramka;
 public:
+
+	std::vector<sf::RectangleShape> pola;
+	std::vector<sf::RectangleShape> przeszkoda;
+
 	Plansza(int yr, int xr) {
 		Ramka.setPosition(3, 120);
 		Ramka.setSize(sf::Vector2f(60 * yr, 60 * xr));
@@ -33,19 +37,19 @@ public:
 		for (int i = 0; i < xr; i++) {
 			for (int j = 0; j < yr; j++) {
 				if (tablica[i][j] == 6) {
-					//new sf::RectangleShape = pole[a];
-					pole[a].setSize(sf::Vector2f(60, 60));
-					pole[a].setPosition(3 + j * 60, 120 + i * 60);
-					pole[a].setFillColor(sf::Color::Cyan);
-					przeszkoda[b] = pole[a];
-					b++;
-					a++;
+					sf::RectangleShape pole;
+					pole.setSize(sf::Vector2f(60, 60));
+					pole.setPosition(3 + j * 60, 120 + i * 60);
+					pole.setFillColor(sf::Color::Cyan);
+					pola.push_back(pole);
+					przeszkoda.push_back(pole);
 				}
 				else {
-					pole[a].setSize(sf::Vector2f(60, 60));
-					pole[a].setPosition(3 + j * 60, 120 + i * 60);
-					pole[a].setFillColor(sf::Color::Transparent);
-					a++;
+					sf::RectangleShape pole;
+					pole.setSize(sf::Vector2f(60, 60));
+					pole.setPosition(3 + j * 60, 120 + i * 60);
+					pole.setFillColor(sf::Color::Transparent);
+					pola.push_back(pole);
 				}
 			}
 		}
@@ -53,13 +57,13 @@ public:
 
 	
 	//Zwracanie Planszy Test
-	sf::RectangleShape* getPlansza() {
-		return pole;
+	std::vector<sf::RectangleShape> getPlansza() {
+		return pola;
 	}
 	sf::RectangleShape getRamka() {
 		return Ramka;
 	}
-	sf::RectangleShape* getPrzeszkoda() {
+	std::vector<sf::RectangleShape> getPrzeszkoda() {
 		return przeszkoda;
 	}
 };
