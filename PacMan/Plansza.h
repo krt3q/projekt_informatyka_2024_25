@@ -13,8 +13,8 @@ private:
 	sf::RectangleShape Ramka;
 public:
 	Plansza(int yr, int xr) {
-		Ramka.setPosition(200, 200);
-		Ramka.setSize(sf::Vector2f(50 * yr, 50 * xr));
+		Ramka.setPosition(3, 120);
+		Ramka.setSize(sf::Vector2f(60 * yr, 60 * xr));
 		Ramka.setOutlineColor(sf::Color::Blue);
 		Ramka.setOutlineThickness(3);
 		Ramka.setFillColor(sf::Color::Transparent);
@@ -34,16 +34,16 @@ public:
 			for (int j = 0; j < yr; j++) {
 				if (tablica[i][j] == 6) {
 					//new sf::RectangleShape = pole[a];
-					pole[a].setSize(sf::Vector2f(50, 50));
-					pole[a].setPosition(200 + j * 50, 200 + i * 50);
+					pole[a].setSize(sf::Vector2f(60, 60));
+					pole[a].setPosition(3 + j * 60, 120 + i * 60);
 					pole[a].setFillColor(sf::Color::Cyan);
 					przeszkoda[b] = pole[a];
 					b++;
 					a++;
 				}
 				else {
-					pole[a].setSize(sf::Vector2f(50, 50));
-					pole[a].setPosition(200 + j * 50, 200 + i * 50);
+					pole[a].setSize(sf::Vector2f(60, 60));
+					pole[a].setPosition(3 + j * 60, 120 + i * 60);
 					pole[a].setFillColor(sf::Color::Transparent);
 					a++;
 				}

@@ -38,13 +38,13 @@ public:
 
 	//Poruszanie klawiatura
 	void poruszanie() {
-		sf::Clock zegar;
 		float velo = 0.1;
 		Plansza plansza(20, 10);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			if (kol != 1 && (bool)(Pacman_S.getPosition().y > (float)plansza.getRamka().getPosition().y) == 1) {
 				Pacman_S.move(0, -velo);
+				klawisz = 1;
 				kol = 0;
 			}
 			else
@@ -53,8 +53,9 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y+50*10-40) == 1) {
+			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y+60*10-40) == 1) {
 				Pacman_S.move(0, velo);
+				klawisz = 2;
 				kol = 0;
 			}
 			else
@@ -62,13 +63,23 @@ public:
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			Pacman_S.move(-velo, 0);
-			kol = 0;
+			if (kol != 3 && (bool)(Pacman_S.getPosition().x > (float)plansza.getRamka().getPosition().x) == 1) {
+				Pacman_S.move(-velo, 0);
+				klawisz = 3;
+				kol = 0;
+			}
+			else
+				Pacman_S.move(0, 0);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			Pacman_S.move(velo, 0);
-			kol = 0;
+			if (kol != 4 && (bool)(Pacman_S.getPosition().x < (float)plansza.getRamka().getPosition().x+60*20-40) == 1) {
+				Pacman_S.move(velo, 0);
+				klawisz = 4;
+				kol = 0;
+			}
+			else
+				Pacman_S.move(0, 0);
 		}
 	}
 
@@ -80,7 +91,6 @@ public:
 			poczatekSprite = 450;
 			koniecSprite = 550;
 			ksztaltPacmana.top = poczatekSprite;
-			klawisz = 1;
 			
 		}
 
@@ -89,21 +99,18 @@ public:
 			poczatekSprite = 150;
 			koniecSprite = 250;
 			ksztaltPacmana.top = poczatekSprite;
-			klawisz = 2;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			poczatekSprite = 300;
 			koniecSprite = 400;
 			ksztaltPacmana.top = poczatekSprite;
-			klawisz = 3;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			poczatekSprite = 0;
 			koniecSprite = 100;
 			ksztaltPacmana.top = poczatekSprite;
-			klawisz = 4;
 		}
 		
 		if (ksztaltPacmana.top == koniecSprite) {
@@ -120,10 +127,9 @@ public:
 	sf::Vector2f pozycjaPacmana(int a, int b) {
 		std::vector<sf::RectangleShape> polapocz¹tkowe;
 		Plansza plansza(a, b);
-		sf::RectangleShape* pola = plansza.getPlansza();
 		for (int i = 0; i < a * b; i++) {
-			if (pola[i].getFillColor() == sf::Color::Transparent) {
-				polapocz¹tkowe.push_back(pola[i]);
+			if (plansza.getPlansza()[i].getFillColor() == sf::Color::Transparent) {
+				polapocz¹tkowe.push_back(plansza.getPlansza()[i]);
 			}
 		}
 		std::random_device dev;

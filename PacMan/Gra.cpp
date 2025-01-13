@@ -38,7 +38,6 @@ int main()
 				window.close();
 			if (event.type == sf::Event::KeyPressed)
 			{
-				std::cout << "a";
 				if (event.key.code == sf::Keyboard::W)
 				{
 					poczatekSprite = 450;
