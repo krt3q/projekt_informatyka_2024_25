@@ -37,7 +37,7 @@ public:
 	}
 
 	//Poruszanie klawiatura
-	void poruszanie() {
+	void poruszanie(int a, int b) {
 		float velo = 0.1;
 		Plansza plansza(20, 10);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -53,7 +53,7 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y+60*10-40) == 1) {
+			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y+60*b-40) == 1) {
 				Pacman_S.move(0, velo);
 				klawisz = 2;
 				kol = 0;
@@ -73,7 +73,7 @@ public:
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			if (kol != 4 && (bool)(Pacman_S.getPosition().x < (float)plansza.getRamka().getPosition().x+60*20-40) == 1) {
+			if (kol != 4 && (bool)(Pacman_S.getPosition().x < (float)plansza.getRamka().getPosition().x+60*a-40) == 1) {
 				Pacman_S.move(velo, 0);
 				klawisz = 4;
 				kol = 0;
