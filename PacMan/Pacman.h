@@ -19,6 +19,7 @@ private:
 	int klawisz;
 	int kol;
 	sf::Vector2f vel;
+	int flaga;
 public:
 	//Konstruktor
 	Pacman(int a, int b) {
@@ -46,6 +47,7 @@ public:
 				Pacman_S.move(0, -velo);
 				klawisz = 1;
 				kol = 0;
+				flaga = 0;
 			}
 			else
 				Pacman_S.move(0, 0);
@@ -57,6 +59,7 @@ public:
 				Pacman_S.move(0, velo);
 				klawisz = 2;
 				kol = 0;
+				flaga = 0;
 			}
 			else
 				Pacman_S.move(0, 0);
@@ -67,6 +70,7 @@ public:
 				Pacman_S.move(-velo, 0);
 				klawisz = 3;
 				kol = 0;
+				flaga = 0;
 			}
 			else
 				Pacman_S.move(0, 0);
@@ -77,9 +81,30 @@ public:
 				Pacman_S.move(velo, 0);
 				klawisz = 4;
 				kol = 0;
+				flaga = 0;
 			}
 			else
 				Pacman_S.move(0, 0);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)&&flaga!=1)
+		{
+			Pacman_S.setPosition(Pacman_S.getPosition().x + 60, Pacman_S.getPosition().y - 60);
+			flaga=1;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && flaga != 1)
+		{
+			Pacman_S.setPosition(Pacman_S.getPosition().x - 60, Pacman_S.getPosition().y - 60);
+			flaga = 1;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && flaga != 1)
+		{
+			Pacman_S.setPosition(Pacman_S.getPosition().x + 60, Pacman_S.getPosition().y + 60);
+			flaga = 1;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && flaga != 1)
+		{
+			Pacman_S.setPosition(Pacman_S.getPosition().x - 60, Pacman_S.getPosition().y + 60);
+			flaga = 1;
 		}
 	}
 
@@ -125,10 +150,10 @@ public:
 
 	//Zwracanie wektora losowej pozycji pocz¹tkowej Pacmana
 	sf::Vector2f pozycjaPacmana(int a, int b) {
-		std::vector<sf::RectangleShape> polapocz¹tkowe;
+		std::vector<sf::Vector2f> polapocz¹tkowe;
 		Plansza plansza(a, b);
-		for (const auto&pole : plansza.getPlansza()) {
-			if (pole.getFillColor() == sf::Color::Transparent) {
+		/*for (const auto& pole : plansza.getPlansza()) {
+			if (!Pacman_S.getGlobalBounds().intersects(pole.getGlobalBounds())) {
 				polapocz¹tkowe.push_back(pole);
 			}
 		}
@@ -136,8 +161,20 @@ public:
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> dist(1, polapocz¹tkowe.size());
 		pozycja = polapocz¹tkowe[dist(rng)].getPosition();
-		pozycja.x += 5;
-		pozycja.y += 5;
+		pozycja.x -= 10;
+		pozycja.y -= 10;
+		return pozycja;*/
+		for (const auto& pole : plansza.getPlansza()) {
+			if (pole.getFillColor() == sf::Color::Transparent) {
+				polapocz¹tkowe.push_back(pole.getPosition());
+			}
+		}
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> dist(1, polapocz¹tkowe.size());
+		pozycja = polapocz¹tkowe[dist(rng)];
+		pozycja.x -= 10;
+		pozycja.y -= 10;
 		return pozycja;
 	}
 
