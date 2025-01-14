@@ -34,7 +34,7 @@ public:
 		ksztaltPacmana.left = 0;
 		Pacman_S.setTextureRect(ksztaltPacmana);
 		Pacman_S.setTexture(tekstura);
-		Pacman_S.setPosition(pozycjaPacmana(a,b));
+		Pacman_S.setPosition(pozycjaPacmana(a, b));
 	}
 
 	//Poruszanie klawiatura
@@ -55,7 +55,7 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y+60*b-40) == 1) {
+			if (kol != 2 && (bool)(Pacman_S.getPosition().y < (float)plansza.getRamka().getPosition().y + 60 * b - 40) == 1) {
 				Pacman_S.move(0, velo);
 				klawisz = 2;
 				kol = 0;
@@ -77,7 +77,7 @@ public:
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			if (kol != 4 && (bool)(Pacman_S.getPosition().x < (float)plansza.getRamka().getPosition().x+60*a-40) == 1) {
+			if (kol != 4 && (bool)(Pacman_S.getPosition().x < (float)plansza.getRamka().getPosition().x + 60 * a - 40) == 1) {
 				Pacman_S.move(velo, 0);
 				klawisz = 4;
 				kol = 0;
@@ -86,10 +86,10 @@ public:
 			else
 				Pacman_S.move(0, 0);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)&&flaga!=1)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && flaga != 1)
 		{
 			Pacman_S.setPosition(Pacman_S.getPosition().x + 60, Pacman_S.getPosition().y - 60);
-			flaga=1;
+			flaga = 1;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && flaga != 1)
 		{
@@ -116,7 +116,7 @@ public:
 			poczatekSprite = 450;
 			koniecSprite = 550;
 			ksztaltPacmana.top = poczatekSprite;
-			
+
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -137,7 +137,7 @@ public:
 			koniecSprite = 100;
 			ksztaltPacmana.top = poczatekSprite;
 		}
-		
+
 		if (ksztaltPacmana.top == koniecSprite) {
 			ksztaltPacmana.top = poczatekSprite;
 		}
@@ -145,7 +145,7 @@ public:
 			ksztaltPacmana.top += 50;
 		Pacman_S.setTextureRect(ksztaltPacmana);
 		zegar.restart();
-		
+
 	}
 
 	//Zwracanie wektora losowej pozycji pocz¹tkowej Pacmana
@@ -200,12 +200,17 @@ public:
 			if (klawisz == 4)
 				kol = 4;
 		}
-		/*if (!sprawdzenieKolizji(pacman, przeszkoda)) {
-			std::cout << "1";
-		}*/
 	}
-	/*sf::IntRect ksztaltpacmana(){
-		return ksztaltPacmana;
-	}*/
+	void kolizjaamam(const sf::Sprite& pacman, const sf::RectangleShape& jedzenie, Plansza plansza) {
+		//if (sprawdzenieKolizji(pacman, jedzenie)) {
+		//	plansza.getJedzenie().pop_back();
+		//}
+		
+	
+	
+	
+	}
+
+
 };
 

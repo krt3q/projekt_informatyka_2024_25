@@ -72,6 +72,9 @@ int main()
 		for (const auto&przeszkoda : plansza.getPrzeszkoda()) {
 			pacman.kolizja(pacman.getPacman(), przeszkoda);
 		}
+		/*for (const auto& jedzenie : plansza.getJedzenie()) {
+			pacman.kolizjaamam(pacman.getPacman(), jedzenie, plansza);
+		}*/
 		pacman.poruszanie(a, b);
 		window.clear();
 		for (const auto&pole : plansza.getPlansza()) {
