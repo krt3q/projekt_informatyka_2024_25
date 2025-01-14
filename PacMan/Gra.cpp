@@ -35,7 +35,7 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyPressed)
+			/*if (event.type == sf::Event::KeyPressed)
 			{
 				if (event.key.code == sf::Keyboard::W)
 				{
@@ -62,7 +62,7 @@ int main()
 					koniecSprite = 100;
 					ksztaltPacmana.top = poczatekSprite;
 				}
-			}
+			}*/
 		}
 		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 
