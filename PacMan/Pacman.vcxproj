@@ -147,6 +147,7 @@
     <ClCompile Include="Interfejs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Interfejs.h" />
     <ClInclude Include="Nagłówek.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Plansza.h" />

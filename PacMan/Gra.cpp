@@ -4,6 +4,7 @@
 #include "Pacman.h"
 #include "Przeszkoda.h"
 #include "Plansza.h"
+#include "Interfejs.h"
 
 
 
@@ -29,62 +30,44 @@ int main()
 
 	Pacman pacman(a,b);
 
+	Interfejs interfejs(5);
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			/*if (event.type == sf::Event::KeyPressed)
-			{
-				if (event.key.code == sf::Keyboard::W)
-				{
-					poczatekSprite = 450;
-					koniecSprite = 550;
-					ksztaltPacmana.top = poczatekSprite;
-				}
-
-				if (event.key.code == sf::Keyboard::S)
-				{
-					poczatekSprite = 150;
-					koniecSprite = 250;
-					ksztaltPacmana.top = poczatekSprite;
-				}
-				if (event.key.code == sf::Keyboard::A)
-				{
-					poczatekSprite = 300;
-					koniecSprite = 400;
-					ksztaltPacmana.top = poczatekSprite;
-				}
-				if (event.key.code == sf::Keyboard::D)
-				{
-					poczatekSprite = 0;
-					koniecSprite = 100;
-					ksztaltPacmana.top = poczatekSprite;
-				}
-			}*/
 		}
 		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 
 			pacman.animuj();
 			zegar.restart();
 		}
-		for (const auto&przeszkoda : plansza.getPrzeszkoda()) {
+		for (const auto& przeszkoda : plansza.getPrzeszkoda()) {
 			pacman.kolizja(pacman.getPacman(), przeszkoda);
 		}
 		/*for (const auto& jedzenie : plansza.getJedzenie()) {
-			pacman.kolizjaamam(pacman.getPacman(), jedzenie, plansza);
+			pacman.kolizjaamam(pacman.getPacman(), jedzenie, plansza, window);
 		}*/
 		pacman.poruszanie(a, b);
+		interfejs.kolizja(window);
 		window.clear();
-		for (const auto&pole : plansza.getPlansza()) {
+		/*for (const auto& pole : plansza.getPlansza()) {
 			window.draw(pole);
 		}
 		for (const auto& amam : plansza.getJedzenie()) {
 			window.draw(amam);
 		}
 		window.draw(plansza.getRamka());
-		window.draw(pacman.getPacman());
+		window.draw(pacman.getPacman());*/
+
+		for (const auto& pole : interfejs.getPola()) {
+			window.draw(pole);
+		}
+		for (const auto& tekst : interfejs.getTekst()) {
+			window.draw(tekst);
+		}
 		window.display();
 	}
 

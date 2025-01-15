@@ -6,13 +6,16 @@
 //#include "Plansza.h"
 //
 //
-//int main() {
+//int main1() {
 //
 //	sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
+//
+//	std::vector<sf::RectangleShape> pola;
 //	sf::RectangleShape graj;
 //	sf::RectangleShape ustawienia;
 //	sf::RectangleShape exit;
 //	sf::RectangleShape zapis;
+//
 //	sf::Font czycionka;
 //	sf::Text textG;
 //	sf::Text textZ;
@@ -92,4 +95,6 @@
 //
 //
 //	return 0;
+//
+//#include "Interfejs.h"
 //}

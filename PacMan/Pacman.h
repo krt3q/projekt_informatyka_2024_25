@@ -201,14 +201,14 @@ public:
 				kol = 4;
 		}
 	}
-	void kolizjaamam(const sf::Sprite& pacman, const sf::RectangleShape& jedzenie, Plansza plansza) {
-		//if (sprawdzenieKolizji(pacman, jedzenie)) {
-		//	plansza.getJedzenie().pop_back();
-		//}
-		
-	
-	
-	
+	void kolizjaamam(const sf::Sprite& pacman, const sf::RectangleShape& jedzenie, Plansza plansza, sf::RenderWindow& window) {
+		if (sprawdzenieKolizji(pacman, jedzenie)) {
+			plansza.getJedzenie().pop_back();
+		}/*
+		for (const auto& jedzenie : plansza.getJedzenie()) {
+			window.draw(jedzenie);
+		}
+		std::cout << plansza.getJedzenie().size();*/
 	}
 
 
