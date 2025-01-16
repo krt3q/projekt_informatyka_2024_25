@@ -14,10 +14,12 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1300, 1000), "SFML works!");
 	sf::Event event;
 
+
 	int a = 20;
 	int b = 10;
 	int poczatekSprite=0;
 	int koniecSprite = 100;
+	
 
 	Plansza plansza(a,b);
 
@@ -39,35 +41,57 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 
-			pacman.animuj();
-			zegar.restart();
-		}
-		for (const auto& przeszkoda : plansza.getPrzeszkoda()) {
-			pacman.kolizja(pacman.getPacman(), przeszkoda);
-		}
-		/*for (const auto& jedzenie : plansza.getJedzenie()) {
-			pacman.kolizjaamam(pacman.getPacman(), jedzenie, plansza, window);
-		}*/
-		pacman.poruszanie(a, b);
-		interfejs.kolizja(window);
 		window.clear();
-		/*for (const auto& pole : plansza.getPlansza()) {
-			window.draw(pole);
-		}
-		for (const auto& amam : plansza.getJedzenie()) {
-			window.draw(amam);
-		}
-		window.draw(plansza.getRamka());
-		window.draw(pacman.getPacman());*/
 
-		for (const auto& pole : interfejs.getPola()) {
-			window.draw(pole);
+		
+		
+		if (interfejs.getOkna() != 1 || interfejs.getOkna() != 2 || interfejs.getOkna() !=3) {
+			window.clear();
+			interfejs.kolizja(window);
+			for (const auto& pole : interfejs.getPola()) {
+				window.draw(pole);
+			}
+
+			for (const auto& tekst : interfejs.getTekst()) {
+				window.draw(tekst);
+			}
+			window.draw(interfejs.getPacman());
+			window.draw(interfejs.napis());
 		}
-		for (const auto& tekst : interfejs.getTekst()) {
-			window.draw(tekst);
+		
+
+		if (interfejs.getOkna() == 1) {
+			window.clear();
+			for (const auto& pole : plansza.getPlansza()) {
+				window.draw(pole);
+			}
+			for (const auto& amam : plansza.getJedzenie()) {
+				window.draw(amam);
+			}
+
+			if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
+
+				pacman.animuj();
+				zegar.restart();
+			}
+
+			for (const auto& przeszkoda : plansza.getPrzeszkoda()) {
+				pacman.kolizja(pacman.getPacman(), przeszkoda);
+			}
+
+			pacman.kolizjaamam(pacman.getPacman(), plansza, window);
+			pacman.poruszanie(a, b);
+
+			pacman.kolizjaamam(pacman.getPacman(), plansza, window);
+			window.draw(plansza.getRamka());
+			window.draw(pacman.getPacman());
+
 		}
+
+		
+			
+		
 		window.display();
 	}
 

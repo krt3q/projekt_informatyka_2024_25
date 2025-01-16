@@ -8,8 +8,6 @@ std::uniform_int_distribution<std::mt19937::result_type> dist(0,6);
 class Plansza {
 private:
 	sf::Vector2f Rozmiar;
-	//sf::RectangleShape pole[500];
-	//sf::RectangleShape przeszkoda[500];
 	sf::RectangleShape Ramka;
 public:
 
@@ -29,9 +27,6 @@ public:
 		for (int i = 0; i < xr; i++) {
 			for (int j = 0; j < yr; j++) {
 				tablica[i][j] = dist(rng);
-				//if (tablica[i][j - 1] == 6 /*&& tablica[i][j - 2] == 6*/) {
-				//		tablica[i][j] = 0;
-				//}
 			}
 		}
 
@@ -72,7 +67,7 @@ public:
 	std::vector<sf::RectangleShape> getPrzeszkoda() {
 		return przeszkoda;
 	}
-	std::vector<sf::RectangleShape> getJedzenie() {
+	std::vector<sf::RectangleShape>& getJedzenie() {
 		return amam;
 	}
 };

@@ -20,6 +20,8 @@ private:
 	int kol;
 	sf::Vector2f vel;
 	int flaga;
+
+	int punkty = 0;
 public:
 	//Konstruktor
 	Pacman(int a, int b) {
@@ -152,18 +154,6 @@ public:
 	sf::Vector2f pozycjaPacmana(int a, int b) {
 		std::vector<sf::Vector2f> polapocz¹tkowe;
 		Plansza plansza(a, b);
-		/*for (const auto& pole : plansza.getPlansza()) {
-			if (!Pacman_S.getGlobalBounds().intersects(pole.getGlobalBounds())) {
-				polapocz¹tkowe.push_back(pole);
-			}
-		}
-		std::random_device dev;
-		std::mt19937 rng(dev());
-		std::uniform_int_distribution<std::mt19937::result_type> dist(1, polapocz¹tkowe.size());
-		pozycja = polapocz¹tkowe[dist(rng)].getPosition();
-		pozycja.x -= 10;
-		pozycja.y -= 10;
-		return pozycja;*/
 		for (const auto& pole : plansza.getPlansza()) {
 			if (pole.getFillColor() == sf::Color::Transparent) {
 				polapocz¹tkowe.push_back(pole.getPosition());
@@ -201,16 +191,15 @@ public:
 				kol = 4;
 		}
 	}
-	void kolizjaamam(const sf::Sprite& pacman, const sf::RectangleShape& jedzenie, Plansza plansza, sf::RenderWindow& window) {
-		if (sprawdzenieKolizji(pacman, jedzenie)) {
-			plansza.getJedzenie().pop_back();
-		}/*
-		for (const auto& jedzenie : plansza.getJedzenie()) {
-			window.draw(jedzenie);
+	void kolizjaamam(const sf::Sprite& pacman, Plansza& plansza, sf::RenderWindow& window) {
+		for (auto& jedzenie : plansza.getJedzenie()) {
+			if (sprawdzenieKolizji(pacman, jedzenie)) {
+				jedzenie.setPosition(sf::Vector2f(1500, 1500));
+				punkty++;
+				std::cout << "Twój wynik to: " << punkty << std::endl;;
+			}
 		}
-		std::cout << plansza.getJedzenie().size();*/
 	}
-
 
 };
 
