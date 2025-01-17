@@ -86,6 +86,7 @@ int main()
 			pacman.kolizjaamam(pacman.getPacman(), plansza, window);
 			window.draw(plansza.getRamka());
 			window.draw(pacman.getPacman());
+			window.draw(pacman.getNapis());
 
 		}
 

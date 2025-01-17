@@ -22,6 +22,10 @@ private:
 	int flaga;
 
 	int punkty = 0;
+
+	sf::Text twojwynik;
+	sf::Text wynik;
+	sf::Font czczionka;
 public:
 	//Konstruktor
 	Pacman(int a, int b) {
@@ -37,6 +41,12 @@ public:
 		Pacman_S.setTextureRect(ksztaltPacmana);
 		Pacman_S.setTexture(tekstura);
 		Pacman_S.setPosition(pozycjaPacmana(a, b));
+		twojwynik.setPosition(10, 10);
+		czczionka.loadFromFile("BRITANIC.TTF");
+		twojwynik.setString("Twoj wynik: ");
+		twojwynik.setFont(czczionka);
+		twojwynik.setFillColor(sf::Color::White);
+		twojwynik.setCharacterSize(30);
 	}
 
 	//Poruszanie klawiatura
@@ -201,5 +211,8 @@ public:
 		}
 	}
 
+	sf::Text getNapis() {
+		return twojwynik;
+	}
 };
 
