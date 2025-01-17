@@ -211,6 +211,14 @@ public:
 		}
 	}
 
+	sf::Text getWynik() {
+		wynik.setPosition(100, 10);
+		//wynik.setString()
+		wynik.setFont(czczionka);
+		wynik.setFillColor(sf::Color::White);
+		wynik.setCharacterSize(30);
+	}
+
 	sf::Text getNapis() {
 		return twojwynik;
 	}
