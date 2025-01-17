@@ -87,6 +87,7 @@ int main()
 			window.draw(plansza.getRamka());
 			window.draw(pacman.getPacman());
 			window.draw(pacman.getNapis());
+			window.draw(pacman.getWynik());
 
 		}
 

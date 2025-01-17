@@ -1,6 +1,8 @@
 #pragma once
 #include "Plansza.h"
 #include <iostream>;
+#include <sstream>;
+
 class Pacman
 {
 private:
@@ -212,15 +214,25 @@ public:
 	}
 
 	sf::Text getWynik() {
-		wynik.setPosition(100, 10);
-		//wynik.setString()
+		sf::Clock zegar;
+		wynik.setPosition(200, 10);
 		wynik.setFont(czczionka);
 		wynik.setFillColor(sf::Color::White);
 		wynik.setCharacterSize(30);
+		if (zegar.getElapsedTime().asMilliseconds() < 150.0f) {
+			wynik.setString(toString(punkty));
+		}
+		return wynik;
 	}
 
 	sf::Text getNapis() {
 		return twojwynik;
+	}
+
+	std::string toString(int wynik) {
+		std::stringstream os;
+		os << wynik;
+		return os.str();
 	}
 };
 
