@@ -5,6 +5,8 @@
 #include "Przeszkoda.h"
 #include "Plansza.h"
 #include "Interfejs.h"
+#include "Ustawienia.h"
+#include "Krzy¿yk.h"
 
 
 
@@ -34,6 +36,8 @@ int main()
 
 	Interfejs interfejs(5);
 
+	Ustawienia ustawienia(5);
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
@@ -46,7 +50,7 @@ int main()
 
 		
 		
-		if (interfejs.getOkna() != 1 || interfejs.getOkna() != 2 || interfejs.getOkna() !=3) {
+		if (interfejs.getOkna(window) == 0) {
 			window.clear();
 			interfejs.kolizja(window);
 			for (const auto& pole : interfejs.getPola()) {
@@ -61,7 +65,7 @@ int main()
 		}
 		
 
-		if (interfejs.getOkna() == 1) {
+		if (interfejs.getOkna(window) == 1) {
 			window.clear();
 			for (const auto& pole : plansza.getPlansza()) {
 				window.draw(pole);
@@ -91,7 +95,22 @@ int main()
 
 		}
 
-		
+		if (interfejs.getOkna(window) == 3) {
+			window.clear(sf::Color(145, 230, 167));
+			ustawienia.kolizja(window);
+			for (const auto& pole : ustawienia.getPola()) {
+				window.draw(pole);
+			}
+
+			for (const auto& tekst : ustawienia.getTekst()) {
+				window.draw(tekst);
+			}/*
+			window.draw(interfejs.getPacman());
+			window.draw(interfejs.napis());*/
+			ustawienia.kolizja(window);
+			window.draw(ustawienia.getX());
+			window.draw(ustawienia.poziomT(window));
+		}
 			
 		
 		window.display();

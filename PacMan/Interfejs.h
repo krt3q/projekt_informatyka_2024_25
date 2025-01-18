@@ -2,28 +2,23 @@
 #include <random>
 #include <vector>
 #include <iostream>
-
+#include "Ustawienia.h"
 
 
 class Interfejs
 {
 private: 
 
+	//Parametry
 	int parametr1;
 	int parametr2 = 0;
 	int a = 350;
 	int b = 220;
-	int i=0;
+	int i = 0;
 
 	int okno = 0;
 
-	enum Okna {
-		Domyslne = 1,
-		Gra = 2,
-		Ustawienia = 3,
-		Zapis = 4
-	};
-
+	//Pacman wraz z animacj¹
 	sf::Sprite Pacman;
 	sf::Texture tekstura;
 	sf::Clock zegar;
@@ -31,6 +26,7 @@ private:
 	int poczatekSprite = 0;
 	int koniecSprite = 100;
 
+	//Pola tekstowe
 	std::vector<sf::RectangleShape> pola;
 	sf::RectangleShape graj;
 	sf::RectangleShape ustawienia;
@@ -39,10 +35,12 @@ private:
 
 	sf::Font czycionka;
 
+	//Wordart
 	sf::Sprite tekst;
 	sf::Texture teks;
 	sf::Clock zegar1;
 
+	//Napisy
 	std::vector<sf::Text> napisy;
 	sf::Text textG;
 	sf::Text textZ;
@@ -102,17 +100,14 @@ public:
 	void kolizja(sf::RenderWindow& window) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (pola[0].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
-				Okna okna = Gra;
 				okno = 1;
 			}
 			if (pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
 				std::cout << "zesty";
-				Okna okna = Ustawienia;
 				okno = 2;
 			}
 			if (pola[2].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
 				std::cout << "fruity";
-				Okna okna = Zapis;
 				okno = 3;
 			}
 		}
@@ -133,7 +128,13 @@ public:
 	std::vector<sf::RectangleShape> getPola() {
 		return pola;
 	}
-	int getOkna(){
+	int getOkna(sf::RenderWindow& window){
+		Ustawienia ustawienia(5);
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (ustawienia.getX().getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
+				okno = 0;
+			}
+		}
 		return okno;
 	}
 	sf::Sprite getPacman() {

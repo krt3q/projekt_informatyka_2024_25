@@ -23,12 +23,14 @@ private:
 	sf::Vector2f vel;
 	int flaga;
 
+	//Punkty oraz tekst do ich wyœwietlania
 	int punkty = 0;
 
 	sf::Text twojwynik;
 	sf::Text wynik;
 	sf::Font czczionka;
 public:
+
 	//Konstruktor
 	Pacman(int a, int b) {
 		if (!tekstura.loadFromFile("Pacman.png"))
@@ -203,6 +205,8 @@ public:
 				kol = 4;
 		}
 	}
+
+	//Kolizja z jedzeniem
 	void kolizjaamam(const sf::Sprite& pacman, Plansza& plansza, sf::RenderWindow& window) {
 		for (auto& jedzenie : plansza.getJedzenie()) {
 			if (sprawdzenieKolizji(pacman, jedzenie)) {
@@ -213,6 +217,7 @@ public:
 		}
 	}
 
+	//Zwracanie tekstu z wynikiem
 	sf::Text getWynik() {
 		sf::Clock zegar;
 		wynik.setPosition(200, 10);
@@ -225,10 +230,12 @@ public:
 		return wynik;
 	}
 
+	//Zwracanie wyniku
 	sf::Text getNapis() {
 		return twojwynik;
 	}
 
+	//Konwertowanie int na string
 	std::string toString(int wynik) {
 		std::stringstream os;
 		os << wynik;

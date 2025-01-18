@@ -148,10 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interfejs.h" />
+    <ClInclude Include="Krzyżyk.h" />
     <ClInclude Include="Nagłówek.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Plansza.h" />
     <ClInclude Include="Przeszkoda.h" />
+    <ClInclude Include="Ustawienia.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Pacman.png" />

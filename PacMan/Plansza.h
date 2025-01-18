@@ -2,19 +2,24 @@
 #include <random>
 #include <vector>
 #include <iostream>
+
 std::random_device dev;
 std::mt19937 rng(dev());
 std::uniform_int_distribution<std::mt19937::result_type> dist(0,6);
 class Plansza {
 private:
+
+	//Plansza
 	sf::Vector2f Rozmiar;
 	sf::RectangleShape Ramka;
 public:
 
+	//Wektory obiektów na planszy
 	std::vector<sf::RectangleShape> pola;
 	std::vector<sf::RectangleShape> przeszkoda;
 	std::vector<sf::RectangleShape> amam;
-
+	
+	//Konstruktor
 	Plansza(int yr, int xr) {
 		Ramka.setPosition(3, 120);
 		Ramka.setSize(sf::Vector2f(60 * yr, 60 * xr));
@@ -56,17 +61,23 @@ public:
 		}
 	}
 
-	
-	//Zwracanie Planszy Test
+
+	//Zwracanie planszy
 	std::vector<sf::RectangleShape> getPlansza() {
 		return pola;
 	}
+
+	//Zwracanie obramowania
 	sf::RectangleShape getRamka() {
 		return Ramka;
 	}
+
+	//Zwracanie przeszkód
 	std::vector<sf::RectangleShape> getPrzeszkoda() {
 		return przeszkoda;
 	}
+
+	//Zwracanie jedzenia
 	std::vector<sf::RectangleShape>& getJedzenie() {
 		return amam;
 	}
