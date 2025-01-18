@@ -100,14 +100,11 @@ public:
 	void kolizja(sf::RenderWindow& window) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (pola[0].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
-				okno = 1;
 			}
 			if (pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
-				std::cout << "zesty";
 				okno = 2;
 			}
 			if (pola[2].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
-				std::cout << "fruity";
 				okno = 3;
 			}
 		}
