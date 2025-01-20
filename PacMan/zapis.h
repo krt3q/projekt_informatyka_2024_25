@@ -1,35 +1,40 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
+#include <string>
 
 class zapis {
 
 private:
+	std::fstream plik;
+	struct gracze{
+		int id;
+		std::string nazwa;
+		int punkty;
+	};
 
 
-
+	int i = 0;
 
 public:
-	zapis(int a) {
-		FILE* fp;
-		fp = fopen("Dane_graczy.dat", "w");
-		if (fp == NULL) {
-		
-		}
-		typedef struct {
-			int id;
-			char nazwa[20];
-			int punkty;
-			sf::Vector2f pozycjaPacmana;
-			std::vector<sf::RectangleShape> Jedzenie;
-			std::vector<sf::RectangleShape> Pola;
-			std::vector<sf::RectangleShape> Przeszkody;
+	zapis(int a);
 
-		} gracze;
-	
-	
+	//std::vector<gracze> graczedozapisania;
+
+	void zapisywanie(int punkty_f, std::string nazwa_f) {
+		plik.open("Gracze.dat", std::ios::out | std::ios::app);
+		gracze gracz = {
+		i,
+		nazwa_f,
+		punkty_f,
+		};
+		plik << gracz.id;
+		plik << gracz.nazwa;
+		plik << gracz.punkty;
+
+		i++;
+		plik.close();
 	}
-
-
 
 };
