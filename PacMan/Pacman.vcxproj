@@ -154,6 +154,7 @@
     <ClInclude Include="Plansza.h" />
     <ClInclude Include="Przeszkoda.h" />
     <ClInclude Include="Ustawienia.h" />
+    <ClInclude Include="zapis.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Pacman.png" />

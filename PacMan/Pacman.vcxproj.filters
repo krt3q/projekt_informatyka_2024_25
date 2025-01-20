@@ -44,6 +44,9 @@
     <ClInclude Include="Krzyżyk.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="zapis.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Pacman.png">
