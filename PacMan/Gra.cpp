@@ -7,6 +7,7 @@
 #include "Interfejs.h"
 #include "Ustawienia.h"
 #include "Krzy¿yk.h"
+#include "zapis.h"
 
 
 
@@ -17,8 +18,8 @@ int main()
 	sf::Event event;
 
 
-	int a = 20;
-	int b = 10;
+	int a = 14;
+	int b = 7;
 	int poczatekSprite=0;
 	int koniecSprite = 100;
 	
@@ -27,7 +28,7 @@ int main()
 
 	sf::Clock zegar;
 
-	int flaga;
+	int flaga=0;
 
 	bool inicjacja{};
 
@@ -51,7 +52,7 @@ int main()
 
 		
 		
-		if (interfejs.getOkna(window) == 0) {
+		if (interfejs.getOkna(window) == 0 || flaga == 1) {
 			if (ustawienia.getLevel() == 1) {
 				plansza = Plansza(6, 3);
 				a = 6;
@@ -64,7 +65,11 @@ int main()
 			}
 			else if (ustawienia.getLevel() == 3) {
 				plansza = Plansza(20, 10);
+				a = 20;
+				b = 10;
 			}
+			
+			pacman.zerujPunkty();
 			window.clear();
 			interfejs.kolizja(window);
 			for (const auto& pole : interfejs.getPola()) {
@@ -79,7 +84,7 @@ int main()
 		}
 		
 
-		if (interfejs.getOkna(window) == 1) {
+		if (interfejs.getOkna(window) == 1 && flaga != 1) {
 			window.clear();
 			if (!inicjacja) {
 				
@@ -100,7 +105,6 @@ int main()
 				}
 				inicjacja=true;
 			}
-			
 			for (const auto& pole : plansza.getPlansza()) {
 				window.draw(pole);
 			}
@@ -125,7 +129,7 @@ int main()
 			if (plansza.kontrolaWygranej() == 1) {
 				window.draw(interfejs.getWygrana());
 			}
-
+			
 			ustawienia.kolizja(window);
 
 			window.draw(plansza.getRamka());
@@ -133,8 +137,6 @@ int main()
 			window.draw(ustawienia.getX());
 			window.draw(pacman.getNapis());
 			window.draw(pacman.getWynik());
-			
-
 		}
 
 		if (interfejs.getOkna(window) == 3) {

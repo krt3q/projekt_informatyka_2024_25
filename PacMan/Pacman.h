@@ -24,11 +24,13 @@ private:
 	int flaga;
 
 	//Tekst do wyœwietlania punktów
-	
-
 	sf::Text twojwynik;
 	sf::Text wynik;
 	sf::Font czczionka;
+
+
+
+
 public:
 
 	//Punkty
@@ -222,8 +224,8 @@ public:
 		}
 	}
 
-	int zwrotPunkt() {
-		return punkty;
+	void zerujPunkty() {
+		punkty = 1;
 	}
 
 	//Zwracanie tekstu z wynikiem
