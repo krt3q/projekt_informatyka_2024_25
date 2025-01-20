@@ -45,6 +45,11 @@ private:
 	sf::Text textG;
 	sf::Text textZ;
 	sf::Text textU;
+
+	//Wygrana
+	sf::Clock zegarW;
+	sf::Sprite winek;
+	sf::Texture wygrana;
 public:
 
 	Interfejs(int d) {
@@ -96,10 +101,18 @@ public:
 		Pacman.setTexture(tekstura);
 		Pacman.setTextureRect(klatki);
 		Pacman.setScale(sf::Vector2f(10, 10));
+
+
+		winek.setPosition(sf::Vector2f(400, 500));
+		wygrana.loadFromFile("wordart2.png");
+		winek.setTexture(wygrana);
+		winek.setScale(0.5, 0.5);
+		winek.setOrigin(400, 300);
 	}
 	void kolizja(sf::RenderWindow& window) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (pola[0].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
+				okno = 1;
 			}
 			if (pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
 				okno = 2;
@@ -152,6 +165,17 @@ public:
 			zegar1.restart();
 		}
 		return tekst;
+	}
+	sf::Sprite getWygrana() {
+		if (zegarW.getElapsedTime().asMilliseconds() > 100.0f) {
+			tekst.rotate(10);
+			zegarW.restart();
+		}
+		return winek;
+	}
+
+	int getOkna_tylkoINT() {
+		return okno;
 	}
 };
 

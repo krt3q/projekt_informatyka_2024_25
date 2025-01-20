@@ -25,10 +25,11 @@ int main()
 
 	Plansza plansza(a,b);
 
-
 	sf::Clock zegar;
 
 	int flaga;
+
+	bool inicjacja{};
 
 	sf::IntRect ksztaltPacmana(0,0,40,40);
 
@@ -51,6 +52,19 @@ int main()
 		
 		
 		if (interfejs.getOkna(window) == 0) {
+			if (ustawienia.getLevel() == 1) {
+				plansza = Plansza(6, 3);
+				a = 6;
+				b = 3;
+			}
+			else if (ustawienia.getLevel() == 2) {
+				plansza = Plansza(14, 7);
+				a = 14;
+				b = 7;
+			}
+			else if (ustawienia.getLevel() == 3) {
+				plansza = Plansza(20, 10);
+			}
 			window.clear();
 			interfejs.kolizja(window);
 			for (const auto& pole : interfejs.getPola()) {
@@ -67,6 +81,26 @@ int main()
 
 		if (interfejs.getOkna(window) == 1) {
 			window.clear();
+			if (!inicjacja) {
+				
+				if (ustawienia.getLevel() == 1) {
+					plansza = Plansza(6,3);
+					a = 6;
+					b = 3;
+				}
+				else if (ustawienia.getLevel() == 2) {
+					plansza = Plansza(14, 7);
+					a = 14;
+					b = 7;
+				}
+				else if (ustawienia.getLevel() == 3) {
+					plansza = Plansza(20, 10);
+					a = 20;
+					b = 10;
+				}
+				inicjacja=true;
+			}
+			
 			for (const auto& pole : plansza.getPlansza()) {
 				window.draw(pole);
 			}
@@ -88,10 +122,18 @@ int main()
 			pacman.poruszanie(a, b);
 
 			pacman.kolizjaamam(pacman.getPacman(), plansza, window);
+			if (plansza.kontrolaWygranej() == 1) {
+				window.draw(interfejs.getWygrana());
+			}
+
+			ustawienia.kolizja(window);
+
 			window.draw(plansza.getRamka());
 			window.draw(pacman.getPacman());
+			window.draw(ustawienia.getX());
 			window.draw(pacman.getNapis());
 			window.draw(pacman.getWynik());
+			
 
 		}
 

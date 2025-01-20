@@ -49,7 +49,7 @@ public:
 					sf::RectangleShape pole;
 					sf::RectangleShape jedzenie;
 					pole.setSize(sf::Vector2f(60, 60));
-					pole.setPosition(3 + j * 60 + 20, 123 + i * 60 + 20);
+					pole.setPosition(3 + j * 60, 123 + i * 60);
 					pole.setFillColor(sf::Color::Transparent);
 					jedzenie.setSize(sf::Vector2f(10, 10));
 					jedzenie.setPosition(3 + j * 60 + 25, 123 + i * 60 + 25);
@@ -59,8 +59,8 @@ public:
 				}
 			}
 		}
+		pola[0].setFillColor(sf::Color::Transparent);
 	}
-
 
 	//Zwracanie planszy
 	std::vector<sf::RectangleShape> getPlansza() {
@@ -80,5 +80,20 @@ public:
 	//Zwracanie jedzenia
 	std::vector<sf::RectangleShape>& getJedzenie() {
 		return amam;
+	}
+
+	int kontrolaWygranej() {
+		bool przegrana=false;
+		for (const auto& jedzenie : getJedzenie()) {
+			if (jedzenie.getPosition() == sf::Vector2f(1500, 1500)) {
+				
+			}
+			else
+				przegrana = true;
+		}
+		if (przegrana == false) {
+			return 1;
+		}
+		return 0;
 	}
 };

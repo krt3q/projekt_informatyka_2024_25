@@ -23,13 +23,16 @@ private:
 	sf::Vector2f vel;
 	int flaga;
 
-	//Punkty oraz tekst do ich wyœwietlania
-	int punkty = 0;
+	//Tekst do wyœwietlania punktów
+	
 
 	sf::Text twojwynik;
 	sf::Text wynik;
 	sf::Font czczionka;
 public:
+
+	//Punkty
+	int punkty = 0;
 
 	//Konstruktor
 	Pacman(int a, int b) {
@@ -166,7 +169,7 @@ public:
 
 	//Zwracanie wektora losowej pozycji pocz¹tkowej Pacmana
 	sf::Vector2f pozycjaPacmana(int a, int b) {
-		std::vector<sf::Vector2f> polapocz¹tkowe;
+		/*std::vector<sf::Vector2f> polapocz¹tkowe;
 		Plansza plansza(a, b);
 		for (const auto& pole : plansza.getPlansza()) {
 			if (pole.getFillColor() == sf::Color::Transparent) {
@@ -178,7 +181,9 @@ public:
 		std::uniform_int_distribution<std::mt19937::result_type> dist(1, polapocz¹tkowe.size());
 		pozycja = polapocz¹tkowe[dist(rng)];
 		pozycja.x -= 10;
-		pozycja.y -= 10;
+		pozycja.y -= 10;*/
+		pozycja.x = 13;
+		pozycja.y = 133;
 		return pozycja;
 	}
 
@@ -217,6 +222,10 @@ public:
 		}
 	}
 
+	int zwrotPunkt() {
+		return punkty;
+	}
+
 	//Zwracanie tekstu z wynikiem
 	sf::Text getWynik() {
 		sf::Clock zegar;
@@ -240,6 +249,11 @@ public:
 		std::stringstream os;
 		os << wynik;
 		return os.str();
+	}
+
+	
+	sf::ConvexShape getX(sf::RenderWindow& window) {
+
 	}
 };
 

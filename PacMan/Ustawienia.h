@@ -1,7 +1,7 @@
 #pragma once
+#include "Interfejs.h"
 #include <vector>
 #include <iostream>
-#include "Interfejs.h"
 
 class Ustawienia
 {
@@ -71,7 +71,7 @@ public:
 		krzy¿.setPoint(9, sf::Vector2f(60, 0));
 		krzy¿.setPoint(10, sf::Vector2f(40, 20));
 		krzy¿.setPoint(11, sf::Vector2f(20, 0));
-		krzy¿.setPosition(10, 10);
+		krzy¿.setPosition(1200, 10);
 		krzy¿.setTextureRect(cofka);
 
 		if (!czcionka.loadFromFile("britanic.ttf")) {
@@ -214,7 +214,12 @@ public:
 
 
 	//Zwraca krzy¿yk
-	sf::ConvexShape getX() {
+	sf::ConvexShape getX()
+	{
 		return krzy¿;
+	}
+
+	int getLevel() {
+		return level;
 	}
 };
