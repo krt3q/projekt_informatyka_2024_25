@@ -110,18 +110,18 @@ public:
 	}
 
 	//Kolizja ze wszystkim
-	void kolizja(sf::RenderWindow& window) {
+	void kolizja(sf::RenderWindow& window, int a) {
 		flaga = 0;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			if (krzy¿.getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
+			/*if (krzy¿.getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
 				std::cout << "b";
-			}
+			}*/
 
 			//Wybór poziomu trudnoœci
 			if (flaga == 0 && pola[0].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))) && okno == 0) {
 				okno = 1;
 				flaga = 1;
-				std::cout << level;
+				//std::cout << level;
 			}
 			while (flaga == 1) {
 				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -131,7 +131,7 @@ public:
 				okno = 2;
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					flaga = 1;
-				std::cout << level;
+				//std::cout << level;
 			}
 			while (flaga == 1) {
 				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -140,14 +140,14 @@ public:
 			if (flaga == 0 && pola[0].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))) && okno == 2) {
 				okno = 0;
 				flaga = 1;
-				std::cout << level;
+				//std::cout << level;
 			}
 			while (flaga == 1) {
 				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					break;
 			}
 
-			if (flaga == 0 && pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
+			if (flaga == 0 && pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))) && a == 1) {
 				okno = 0;
 				flaga = 1;
 				std::cout << "Wybierz gracza z poni¿szych (wpisujac odpowiednia cyfre): ";

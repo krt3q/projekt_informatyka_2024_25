@@ -103,11 +103,10 @@ public:
 		Pacman.setScale(sf::Vector2f(10, 10));
 
 
-		winek.setPosition(sf::Vector2f(400, 500));
+		winek.setPosition(sf::Vector2f(650, 500));
 		wygrana.loadFromFile("wordart2.png");
 		winek.setTexture(wygrana);
 		winek.setScale(0.5, 0.5);
-		winek.setOrigin(400, 300);
 	}
 	void kolizja(sf::RenderWindow& window) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -167,8 +166,10 @@ public:
 		return tekst;
 	}
 	sf::Sprite getWygrana() {
+		winek.setOrigin((sf::Vector2f)wygrana.getSize() / 2.f);
+
 		if (zegarW.getElapsedTime().asMilliseconds() > 100.0f) {
-			tekst.rotate(10);
+			winek.rotate(10);
 			zegarW.restart();
 		}
 		return winek;

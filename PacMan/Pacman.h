@@ -219,13 +219,13 @@ public:
 			if (sprawdzenieKolizji(pacman, jedzenie)) {
 				jedzenie.setPosition(sf::Vector2f(1500, 1500));
 				punkty++;
-				std::cout << "Twój wynik to: " << punkty << std::endl;;
+				//std::cout << "Twój wynik to: " << punkty << std::endl;;
 			}
 		}
 	}
 
 	void zerujPunkty() {
-		punkty = 1;
+		punkty = 0;
 	}
 
 	//Zwracanie tekstu z wynikiem
@@ -254,8 +254,20 @@ public:
 	}
 
 	
-	sf::ConvexShape getX(sf::RenderWindow& window) {
-
-	}
+	/*sf::Sprite getWygrana(sf::RenderWindow& window) {
+		sf::Clock zegarW;
+		sf::Sprite winek;
+		sf::Texture wygrana;
+		winek.setPosition(sf::Vector2f(400, 500));
+		wygrana.loadFromFile("wordart2.png");
+		winek.setTexture(wygrana);
+		winek.setScale(0.5, 0.5);
+		winek.setOrigin(400, 300);
+		if (zegarW.getElapsedTime().asMilliseconds() > 100.0f) {
+			tekst.rotate(10);
+			zegarW.restart();
+		}
+		return winek;
+	}*/
 };
 

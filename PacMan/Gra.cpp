@@ -1,6 +1,9 @@
 #include <iostream>
 #include <random>
 #include <SFML/Graphics.hpp>
+#include <fstream>
+#include <string>
+#include <cstdlib>
 #include "Pacman.h"
 #include "Przeszkoda.h"
 #include "Plansza.h"
@@ -28,13 +31,17 @@ int main()
 
 	sf::Clock zegar;
 
-	int flaga=0;
+	int flaga = 0;
+
+	int pauza = 0;
 
 	bool inicjacja{};
 
 	sf::IntRect ksztaltPacmana(0,0,40,40);
 
-	Pacman pacman(a,b);
+	//Pacman pacman(a,b);
+
+	Pacman* pacman = new Pacman(a, b);
 
 	Interfejs interfejs(5);
 
@@ -54,22 +61,28 @@ int main()
 		
 		if (interfejs.getOkna(window) == 0 || flaga == 1) {
 			if (ustawienia.getLevel() == 1) {
+				delete pacman;
+				pacman = new Pacman(6, 3);
 				plansza = Plansza(6, 3);
 				a = 6;
 				b = 3;
 			}
 			else if (ustawienia.getLevel() == 2) {
+				delete pacman;
+				pacman = new Pacman(14, 7);
 				plansza = Plansza(14, 7);
 				a = 14;
 				b = 7;
 			}
 			else if (ustawienia.getLevel() == 3) {
+				delete pacman;
+				pacman = new Pacman(20, 10);
 				plansza = Plansza(20, 10);
 				a = 20;
 				b = 10;
 			}
 			
-			pacman.zerujPunkty();
+			pacman->zerujPunkty();
 			window.clear();
 			interfejs.kolizja(window);
 			for (const auto& pole : interfejs.getPola()) {
@@ -105,6 +118,25 @@ int main()
 				}
 				inicjacja=true;
 			}
+
+
+			while (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || pauza == 1) {
+				pauza = 1;
+				int* opcja = new int;
+				std::cout << "Kontynuuj [1]\n";
+				std::cout << "Zapisz [2]\n";
+				std::cin >> *opcja;
+				if (*opcja == 1) {
+					delete opcja;
+					pauza = 0;
+				}
+				else if (*opcja == 2) {
+					delete opcja;
+					pauza = 0;
+				}
+			}
+
+
 			for (const auto& pole : plansza.getPlansza()) {
 				window.draw(pole);
 			}
@@ -114,34 +146,33 @@ int main()
 
 			if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 
-				pacman.animuj();
+				pacman->animuj();
 				zegar.restart();
 			}
 
 			for (const auto& przeszkoda : plansza.getPrzeszkoda()) {
-				pacman.kolizja(pacman.getPacman(), przeszkoda);
+				pacman->kolizja(pacman->getPacman(), przeszkoda);
 			}
 
-			pacman.kolizjaamam(pacman.getPacman(), plansza, window);
-			pacman.poruszanie(a, b);
+			pacman->kolizjaamam(pacman->getPacman(), plansza, window);
+			pacman->poruszanie(a, b);
 
-			pacman.kolizjaamam(pacman.getPacman(), plansza, window);
+			pacman->kolizjaamam(pacman->getPacman(), plansza, window);
 			if (plansza.kontrolaWygranej() == 1) {
 				window.draw(interfejs.getWygrana());
 			}
 			
-			ustawienia.kolizja(window);
+			ustawienia.kolizja(window, 0);
 
 			window.draw(plansza.getRamka());
-			window.draw(pacman.getPacman());
+			window.draw(pacman->getPacman());
 			window.draw(ustawienia.getX());
-			window.draw(pacman.getNapis());
-			window.draw(pacman.getWynik());
+			window.draw(pacman->getNapis());
+			window.draw(pacman->getWynik());
 		}
 
 		if (interfejs.getOkna(window) == 3) {
 			window.clear(sf::Color(145, 230, 167));
-			ustawienia.kolizja(window);
 			for (const auto& pole : ustawienia.getPola()) {
 				window.draw(pole);
 			}
@@ -151,7 +182,7 @@ int main()
 			}/*
 			window.draw(interfejs.getPacman());
 			window.draw(interfejs.napis());*/
-			ustawienia.kolizja(window);
+			ustawienia.kolizja(window, 1);
 			window.draw(ustawienia.getX());
 			window.draw(ustawienia.poziomT(window));
 		}

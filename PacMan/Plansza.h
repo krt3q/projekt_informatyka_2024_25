@@ -18,7 +18,7 @@ public:
 	std::vector<sf::RectangleShape> pola;
 	std::vector<sf::RectangleShape> przeszkoda;
 	std::vector<sf::RectangleShape> amam;
-	
+
 	//Konstruktor
 	Plansza(int yr, int xr) {
 		Ramka.setPosition(3, 120);
