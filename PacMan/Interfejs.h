@@ -105,12 +105,13 @@ public:
 		Pacman.setTextureRect(klatki);
 		Pacman.setScale(sf::Vector2f(10, 10));
 
-		if (!wygrana.loadFromFile("wordart2.png"))
+		if (!wygrana.loadFromFile("winek.png"))
 			std::cerr << "B³¹d";
 		winek.setPosition(sf::Vector2f(650, 500));
-		wygrana.loadFromFile("wordart2.png");
+		wygrana.loadFromFile("winek.png");
 		winek.setTexture(wygrana);
 		winek.setScale(0.5, 0.5);
+		winek.setOrigin((sf::Vector2f)wygrana.getSize() / 2.f);
 	}
 	
 	//Kolizja myszki z bloczkami
@@ -186,7 +187,6 @@ public:
 
 	//Zwraca wordarta z okazji wygranej
 	sf::Sprite getWygrana() {
-		winek.setOrigin((sf::Vector2f)wygrana.getSize() / 2.f);
 
 		if (zegarW.getElapsedTime().asMilliseconds() > 100.0f) {
 			winek.rotate(10);

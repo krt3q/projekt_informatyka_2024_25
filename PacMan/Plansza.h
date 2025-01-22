@@ -42,7 +42,7 @@ public:
 					pole.setSize(sf::Vector2f(60, 60));
 					pole.setPosition(3 + j * 60, 123 + i * 60);
 					pole.setFillColor(sf::Color::Cyan);
-					if (i==0 && j == 0) {
+					if (i == 0 && j == 0 || i == 0 && j == 5 || i == 1 && j == 5 || i == 2 && j == 5) {
 						pole.setFillColor(sf::Color::Transparent);
 						pola.push_back(pole);
 					}

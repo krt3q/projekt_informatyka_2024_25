@@ -101,6 +101,7 @@ int main()
 			inicjacja == false;
 			interfejs.setOkno();
 			flaga = 0;
+			wyczyœæKonsolê();
 			//Poziom trudnoœci nastawia odpowiednie parametry
 			if (ustawienia.getLevel() == 1) {
 				delete pacman;
@@ -204,6 +205,8 @@ int main()
 					zegar.restart();
 				}
 
+				pacman->aktualizacja();
+
 				for (const auto& przeszkoda : plansza.getPrzeszkoda()) {
 					pacman->kolizja(pacman->getPacman(), przeszkoda);
 				}
@@ -217,58 +220,159 @@ int main()
 				for (const auto& przeszkoda : plansza.getPrzeszkoda()) {
 					pacman->kolizjaDuszkaN(pacman->getDuszekN(), przeszkoda);
 				}
+				
 
-				pacman->kolizjaamam(pacman->getPacman(), plansza, window);
+				pacman->kolizjaamam(pacman->getPacman(), plansza.getJedzenie(), window);
+
 				pacman->poruszanie(a, b);
 
 				pacman->poruszanieDuszkaCz(a,b);
 				pacman->poruszanieDuszkaR(a,b);
 				pacman->poruszanieDuszkaN(a,b);
 
-				pacman->kolizjaamam(pacman->getPacman(), plansza, window);
+				//pacman->kolizjaamam(pacman->getPacman(), plansza, window);
 				if (plansza.kontrolaWygranej() == 1) {
 					window.draw(interfejs.getWygrana());
 				}
 
 				if (ustawienia.getLevel() == 3) {
+					for (const auto& duszek : pacman->getDuszki()) {
+						if (pacman->przegrana(pacman->getPacman(), duszek, window) == 1) {
+							//window.draw(pacman->koniec());
+							while (true) {
+								window.draw(pacman->koniec()); 
+								int koniec;
+								std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
+								std::cin >> koniec;
+								if (koniec == 1) {
+									flaga = 1;
+									break;
+								}
+							}
+						}
+					}
 					window.draw(pacman->getDuszekCz());
 					window.draw(pacman->getDuszekR());
 					window.draw(pacman->getDuszekN());
 				}
 
+
+				if (ustawienia.getLevel() == 2) {
+					if (pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window)) {
+						pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window);
+						while (true) {
+							if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+								while (true) {
+									int koniec;
+									std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
+									std::cin >> koniec;
+									if (koniec == 1) {
+										flaga = 1;
+										break;
+									}
+								}
+							}
+						}
+					}
+					window.draw(pacman->getDuszekCz());
+				}
+
 				ustawienia.kolizja(window, 0);
+
 				window.draw(plansza.getRamka());
 				window.draw(pacman->getPacman());
 				window.draw(ustawienia.getX());
 				window.draw(pacman->getNapis());
-				window.draw(pacman->getWynik());
+				window.draw(pacman->getWynik(0));
 			}
 			if (nadpis == 1) {
 				for (const auto& pole : zapis.zapisanePola()) {
 					window.draw(pole);
-					std::cout << 1;
 				}
 				for (const auto& amam : zapis.zapisaneJedzenie()) {
 					window.draw(amam);
-					std::cout << 2;
 				}
 
-				//pacman->getPacman().setPosition(100,100);
+				pacman->getPacman().setPosition(zapis.zapisanaPozycja());
 
 				if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 
 					pacman->animuj();
+					pacman->animujDuszka();
 					zegar.restart();
 				}
-				std::cout << zapis.zapisanePunkty() << std::endl;
+
+				pacman->kolizjaamam(pacman->getPacman(), zapis.zapisaneJedzenie(), window);
+
+				pacman->aktualizacja();
+
+				//std::cout << zapis.zapisanePunkty() << std::endl;
 				for (const auto& przeszkoda : zapis.zapisanePrzeszkody()) {
 					pacman->kolizja(pacman->getPacman(), przeszkoda);
 				}
+				for (const auto& przeszkoda : zapis.zapisanePrzeszkody()) {
+					pacman->kolizjaDuszkaCz(pacman->getDuszekCz(), przeszkoda);
+				}
+				for (const auto& przeszkoda : zapis.zapisanePrzeszkody()) {
+					pacman->kolizjaDuszkaR(pacman->getDuszekR(), przeszkoda);
+				}
+				for (const auto& przeszkoda : zapis.zapisanePrzeszkody()) {
+					pacman->kolizjaDuszkaN(pacman->getDuszekN(), przeszkoda);
+				}
+				
 
-				pacman->kolizjaamam(pacman->getPacman(), plansza, window);
+				if (ustawienia.getLevel() == 3) {
+					for (const auto& duszek : pacman->getDuszki()) {
+						if (pacman->przegrana(pacman->getPacman(), duszek, window) == 1) {
+							pacman->przegrana(pacman->getPacman(), duszek, window);
+							while (true) {
+								int koniec;
+								std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
+								std::cin >> koniec;
+								if (koniec == 1) {
+									flaga = 1;
+									break;
+								}
+							}
+						}
+					}
+					window.draw(pacman->getDuszekCz());
+					window.draw(pacman->getDuszekR());
+					window.draw(pacman->getDuszekN());
+				}
+				if (ustawienia.getLevel() == 2) {
+					if (pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window)) {
+						pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window);
+						while (true) {
+							if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+								while (true) {
+									int koniec;
+									std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
+									std::cin >> koniec;
+									if (koniec == 1) {
+										flaga = 1;
+										break;
+									}
+								}
+							}
+						}
+					}
+					window.draw(pacman->getDuszekCz());
+				}
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					std::cout << "test";
+					if (ustawienia.getX().getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
+						nadpis = 0;
+					}
+				}
+
 				pacman->poruszanie(a, b);
 
-				pacman->kolizjaamam(pacman->getPacman(), plansza, window);
+				pacman->poruszanieDuszkaCz(a, b);
+				pacman->poruszanieDuszkaR(a, b);
+				pacman->poruszanieDuszkaN(a, b);
+
+				pacman->kolizjaamam(pacman->getPacman(), zapis.zapisaneJedzenie(), window);
 				if (plansza.kontrolaWygranej() == 1) {
 					window.draw(interfejs.getWygrana());
 				}
@@ -279,7 +383,7 @@ int main()
 				window.draw(pacman->getPacman());
 				window.draw(ustawienia.getX());
 				window.draw(pacman->getNapis());
-				window.draw(pacman->getWynik());
+				window.draw(pacman->getWynik(zapis.zapisanePunkty()));
 			}
 			
 		}
@@ -293,7 +397,9 @@ int main()
 			if (wybór == 1) {
 				//std::cout << ustawienia.getGracz();
 				zapis.odczytywanie("dane.json", ustawienia.getGracz(), a, b);
-				nadpis = 1;
+				if (zapis.zapisanePunkty() != 0) {
+					nadpis = 1;
+				}
 				flaga = 1;
 			}
 			else if (wybór == 2) {
@@ -316,6 +422,7 @@ int main()
 			window.draw(interfejs.napis());*/
 			ustawienia.kolizja(window, 1);
 			window.draw(ustawienia.getX());
+			window.draw(ustawienia.getDuszek());
 			window.draw(ustawienia.poziomT(window));
 		}
 			

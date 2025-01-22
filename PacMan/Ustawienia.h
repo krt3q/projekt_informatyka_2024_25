@@ -25,7 +25,7 @@ private:
 	sf::Clock zegar;
 	sf::IntRect klatki;
 	int poczatekSprite = 0;
-	int koniecSprite = 100;
+	int koniecSprite = 50;
 
 	//Opis pól i przycisku exit
 	std::vector<sf::RectangleShape> pola;
@@ -108,6 +108,15 @@ public:
 			if (i == 2)
 				a = b;
 		}
+		klatki.height = 40;
+		klatki.width = 40;
+		klatki.top = 0;
+		klatki.left = 0;
+		Duszek.setPosition(sf::Vector2f(60, 215));
+		tekstura.loadFromFile("Duszki.png");
+		Duszek.setTexture(tekstura);
+		Duszek.setTextureRect(klatki);
+		Duszek.setScale(sf::Vector2f(10, 10));
 	}
 
 	//Kolizja ze wszystkim
@@ -157,16 +166,19 @@ public:
 				if (!plik.is_open()) {
 					std::cerr << "Nie mozna otworzyc pliku!";
 				}
-				//if(!plik.)
-				/*json stanGry;
-				plik >> stanGry;
-				plik.close();
-
-				for (const auto& [nazwaGracza, daneGracza] : stanGry.items()) {
-					std::cout << nazwaGracza << std::endl;
-				}*/
+				if (czyPlikjestPusty("dane.json")) {
+					json stanGry;
+					plik >> stanGry;
+					plik.close();
+					for (const auto& [nazwaGracza, daneGracza] : stanGry.items()) {
+						std::cout << nazwaGracza << std::endl;
+					}
+				}
 
 				std::cin >> nazwaGracza;
+				if (nazwaGracza == "exit") {
+					nazwaGracza = "";
+				}
 				
 			}
 			while (flaga == 1) {
@@ -218,6 +230,29 @@ public:
 		return stopien;
 	}
 
+	sf::Sprite getDuszek() {
+		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
+			if (klatki.top == koniecSprite) {
+				klatki.top = poczatekSprite;
+			}
+			else
+				klatki.top += 50;
+			Duszek.setTextureRect(klatki);
+			zegar.restart();
+		}
+		return Duszek;
+	}
+
+	bool czyPlikjestPusty(const std::string& nazwaPliku) {
+		std::ifstream plik(nazwaPliku);
+		if (!plik.is_open()) {
+			std::cerr << "Nie mo¿na otworzyæ pliku: " << nazwaPliku << std::endl;
+			return false; // Lub inna obs³uga b³êdu
+		}
+		char c;
+		plik >> std::noskipws >> c;
+		return !plik.eof();
+	}
 	//Zwracanie napisów
 	std::vector<sf::Text> getTekst() {
 		return napisy;

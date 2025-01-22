@@ -49,6 +49,11 @@ private:
 	//Zbiór duszków
 	std::vector<sf::Sprite> duszki;
 
+	//Przegrana 
+	sf::Sprite przegranaS;
+	sf::Texture loser;
+	sf::Clock zegarL;
+
 	//Zmienne do kolizji duszków
 	bool checkCz = false;
 	bool checkR = false;
@@ -65,6 +70,7 @@ public:
 
 	//Punkty
 	int punkty = 0;
+	bool wynikB = false;
 
 	//Konstruktor
 	Pacman(int a) {
@@ -116,11 +122,20 @@ public:
 		duszekN.setTexture(teksturaN);
 		duszekN.setTextureRect(ksztaltDuszkaN);
 		duszekN.setPosition(308, 128);
+
+		duszki.push_back(duszekCz);
+		duszki.push_back(duszekR);
+		duszki.push_back(duszekN);
+
+		przegranaS.setPosition(sf::Vector2f(300, 150));
+		loser.loadFromFile("wordart.png");
+		przegranaS.setTexture(loser);
+		przegranaS.setOrigin((sf::Vector2f)loser.getSize() / 2.f);
 	}
 
 	//Poruszanie klawiatura
 	void poruszanie(int a, int b) {
-		float velo = 0.2;
+		float velo = 0.4;
 		Plansza plansza(a, b);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
@@ -406,6 +421,13 @@ public:
 		}
 	}
 
+	void aktualizacja() {
+		duszki.clear();
+		duszki.push_back(duszekCz);
+		duszki.push_back(duszekR);
+		duszki.push_back(duszekN);
+	}
+
 	//Zwracanie wektora (kiedyœ losowej) pozycji pocz¹tkowej Pacmana
 	sf::Vector2f pozycjaPacmana() {
 		/*std::vector<sf::Vector2f> polapocz¹tkowe;
@@ -488,14 +510,27 @@ public:
 	}
 
 	//Kolizja z jedzeniem
-	void kolizjaamam(const sf::Sprite& pacman, Plansza& plansza, sf::RenderWindow& window) {
-		for (auto& jedzenie : plansza.getJedzenie()) {
-			if (sprawdzenieKolizji(pacman, jedzenie)) {
-				jedzenie.setPosition(sf::Vector2f(1500, 1500));
+	void kolizjaamam(const sf::Sprite& pacman, std::vector<sf::RectangleShape>& jedzenie, sf::RenderWindow& window) {
+		for (auto& jedzeñ : jedzenie) {
+			if (sprawdzenieKolizji(pacman, jedzeñ)) {
+				jedzeñ.setPosition(sf::Vector2f(1500, 1500));
 				punkty++;
 				//std::cout << "Twój wynik to: " << punkty << std::endl;;
 			}
 		}
+	}
+
+	//Funkcja przegranej
+	int przegrana(const sf::Sprite& pacman, const sf::Sprite& duszek,sf::RenderWindow& window) {
+		if (pacman.getGlobalBounds().intersects(duszek.getGlobalBounds())) {
+			return 1;
+		}
+		else
+			return 0;
+	}
+
+	sf::Sprite koniec() {
+		return przegranaS;
 	}
 
 	//Zwracanie liczby punktów
@@ -506,11 +541,17 @@ public:
 	//Zerowanie punktów
 	void zerujPunkty() {
 		punkty = 0;
+		wynikB = false;
 	}
 
 	//Zwracanie tekstu z wynikiem
-	sf::Text getWynik() {
+	sf::Text getWynik(int a) {
+		
 		sf::Clock zegar;
+		if (!wynikB) {
+			punkty = a;
+			wynikB = true;
+		}
 		wynik.setPosition(200, 10);
 		wynik.setFont(czczionka);
 		wynik.setFillColor(sf::Color::White);
@@ -533,6 +574,7 @@ public:
 		return os.str();
 	}
 
+	//Duszki
 	sf::Sprite getDuszekCz() {
 		return duszekCz;
 	}
@@ -545,14 +587,16 @@ public:
 		return duszekN;
 	}
 
-	void czekaj(int milisekundy) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(milisekundy));
-	}
-
+	//Zerowanie flag
 	void zeruj() {
 		checkCz = false;
 		checkR = false;
 		checkN = false;
+	}
+
+	//Zwracanie duszków std::vector
+	std::vector<sf::Sprite> getDuszki() {
+		return duszki;
 	}
 };
 
