@@ -105,7 +105,8 @@ public:
 		Pacman.setTextureRect(klatki);
 		Pacman.setScale(sf::Vector2f(10, 10));
 
-
+		if (!wygrana.loadFromFile("wordart2.png"))
+			std::cerr << "B³¹d";
 		winek.setPosition(sf::Vector2f(650, 500));
 		wygrana.loadFromFile("wordart2.png");
 		winek.setTexture(wygrana);
@@ -133,6 +134,10 @@ public:
 			else
 				pole.setFillColor(sf::Color(232, 215, 139));
 		}
+	}
+
+	void Rysuj(sf::RenderWindow& window) {
+		window.draw(tekst);
 	}
 
 	//Zwracanie napisów

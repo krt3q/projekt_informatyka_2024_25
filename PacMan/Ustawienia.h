@@ -157,19 +157,14 @@ public:
 				if (!plik.is_open()) {
 					std::cerr << "Nie mozna otworzyc pliku!";
 				}
-
-				json stanGry;
+				//if(!plik.)
+				/*json stanGry;
 				plik >> stanGry;
 				plik.close();
 
-
-				if (!stanGry.contains("Gracz") || !stanGry["Gracz"].is_array()) {
-					stanGry["Gracz"] = json::array();
-				}
-				for (const std::string gracze : stanGry["Gracz"]) {
-					std::cout << gracze[0]["Gracz"] << std::endl;
-					std::cout << 1;
-				}
+				for (const auto& [nazwaGracza, daneGracza] : stanGry.items()) {
+					std::cout << nazwaGracza << std::endl;
+				}*/
 
 				std::cin >> nazwaGracza;
 				

@@ -13,6 +13,10 @@ private:
 
 public:
 
+	std::vector<sf::RectangleShape> pole1;
+	std::vector<sf::RectangleShape> przeszkoda1;
+	std::vector<sf::RectangleShape> amam1;
+
 	struct zapisz {
 		int pkt;
 		sf::Vector2f pozycja;
@@ -31,14 +35,49 @@ public:
 	
 
 	//Zapisywanie
-	void zapisywanie(const std::string& nazwaPliku,const std::string& nazwaGracza, int punkty, const sf::Vector2f pacman, const std::vector<sf::RectangleShape>& pola,
-		const std::vector<sf::RectangleShape>& jedzenie, const std::vector<sf::RectangleShape>& przeszkody, int a, int b){
+	void zapisywanie(const std::string& nazwaPliku,std::string nazwaGracza, int punkty, const sf::Vector2f pacman, std::vector<sf::RectangleShape> pola,
+		std::vector<sf::RectangleShape> przeszkody, std::vector<sf::RectangleShape> jedzenie, int a, int b){
 		
+		////Tworzenie zmiennej json
+		//stanGry["Gracz"] = nazwaGracza;
+		//stanGry["Punkty"] = punkty;
+		//stanGry["Pacman"][0] = pacman.x;
+		//stanGry["Pacman"][1] = pacman.y;
+
+		////Tworzenie miejsc dla pól
+		//for (const auto& pole : pola) {
+		//	json danePola;
+		//	danePola["pozycja"] = { pole.getPosition().x,pole.getPosition().y };
+		//	danePola["rozmiar"] = { pole.getSize().x,pole.getSize().y };
+		//	auto color = pole.getFillColor();
+		//	danePola["kolor"] = { color.r, color.g, color.b, color.a };
+		//	stanGry["pola"].push_back(danePola);
+		//}
+
+		////Tworzenie miejsc dla przeszkód
+		//for (const auto& pole : przeszkody) {
+		//	json danePrzeszkody;
+		//	danePrzeszkody["pozycja"] = { pole.getPosition().x,pole.getPosition().y };
+		//	danePrzeszkody["rozmiar"] = { pole.getSize().x,pole.getSize().y };
+		//	auto color = pole.getFillColor();
+		//	danePrzeszkody["kolor"] = { color.r, color.g, color.b, color.a };
+		//	stanGry["przeszkody"].push_back(danePrzeszkody);
+		//}
+
+		////Tworzenie miejsc na jedzenie
+		//for (const auto& pole : jedzenie) {
+		//	json daneJedzenia;
+		//	daneJedzenia["pozycja"] = { pole.getPosition().x,pole.getPosition().y };
+		//	daneJedzenia["rozmiar"] = { pole.getSize().x,pole.getSize().y };
+		//	auto color = pole.getFillColor();
+		//	daneJedzenia["kolor"] = { color.r, color.g, color.b, color.a };
+		//	stanGry["jedzenie"].push_back(daneJedzenia);
+		//}
+
 		//Tworzenie zmiennej json
-		stanGry["Gracz"] = nazwaGracza;
-		stanGry["Punkty"] = punkty;
-		stanGry["Pacman"][0] = pacman.x;
-		stanGry["Pacman"][1] = pacman.y;
+		stanGry[nazwaGracza]["Punkty"] = punkty;
+		stanGry[nazwaGracza]["Pacman"][0] = pacman.x;
+		stanGry[nazwaGracza]["Pacman"][1] = pacman.y;
 
 		//Tworzenie miejsc dla pól
 		for (const auto& pole : pola) {
@@ -47,7 +86,7 @@ public:
 			danePola["rozmiar"] = { pole.getSize().x,pole.getSize().y };
 			auto color = pole.getFillColor();
 			danePola["kolor"] = { color.r, color.g, color.b, color.a };
-			stanGry["pola"].push_back(danePola);
+			stanGry[nazwaGracza]["pola"].push_back(danePola);
 		}
 
 		//Tworzenie miejsc dla przeszkód
@@ -57,7 +96,7 @@ public:
 			danePrzeszkody["rozmiar"] = { pole.getSize().x,pole.getSize().y };
 			auto color = pole.getFillColor();
 			danePrzeszkody["kolor"] = { color.r, color.g, color.b, color.a };
-			stanGry["przeszkody"].push_back(danePrzeszkody);
+			stanGry[nazwaGracza]["przeszkody"].push_back(danePrzeszkody);
 		}
 
 		//Tworzenie miejsc na jedzenie
@@ -67,7 +106,7 @@ public:
 			daneJedzenia["rozmiar"] = { pole.getSize().x,pole.getSize().y };
 			auto color = pole.getFillColor();
 			daneJedzenia["kolor"] = { color.r, color.g, color.b, color.a };
-			stanGry["jedzenie"].push_back(daneJedzenia);
+			stanGry[nazwaGracza]["jedzenie"].push_back(daneJedzenia);
 		}
 
 		//Zapis do pliku
@@ -84,36 +123,45 @@ public:
 		if (!plik.is_open()) {
 			std::cerr << "Nie mozna otworzyc pliku!";
 		}
-	
+
 		json stanGry;
 		plik >> stanGry;
 		plik.close();
 
 
-		Pacman pcman(a, b);
+		Pacman pcman(1);
 		Plansza plansza(a, b);
+
+
 
 		bool flaga = false;
 
-		if (!stanGry.contains("Gracz") || !stanGry["Gracz"].is_array()) {
+		/*if (!stanGry.contains("Gracz") || !stanGry["Gracz"].is_array()) {
 			stanGry["Gracz"] = json::array();
-		}
-		std::cout << nazwaGracza << "::" << stanGry["Gracz"];
+		}*/
 		//Zapisywanie w przypadku odnalezienia gracza
-		for (const auto& gracz : stanGry["Gracz"]) {
-			if (gracz["Gracz"] == nazwaGracza) {
+		for (const auto& [nickGracza, daneGracza] : stanGry.items()) {
+			if (nickGracza == nazwaGracza) {
 				//Odczyt punktów
-				int punkty = gracz["Punkty"];
+				int punkty = daneGracza.at("Punkty").get<int>();
 
 				//Odczyt sprite
 				sf::Vector2f pacman;
-				pacman.x = gracz["Pacman"][0];
-				pacman.y = gracz["Pacman"][1];
-
+				pacman.x = daneGracza.at("Pacman")[0];
+				pacman.y = daneGracza.at("Pacman")[1];
 
 				//Odczyt pól
+				std::vector<sf::RectangleShape> jedzenie;
+				for (const auto& daneJedzenia : daneGracza.at("jedzenie")) {
+					sf::RectangleShape jedzeñ;
+					jedzeñ.setPosition(daneJedzenia["pozycja"][0], daneJedzenia["pozycja"][1]);
+					jedzeñ.setSize(sf::Vector2f(daneJedzenia["rozmiar"][0], daneJedzenia["rozmiar"][1]));
+					jedzeñ.setFillColor(sf::Color(daneJedzenia["kolor"][0], daneJedzenia["kolor"][1], daneJedzenia["kolor"][2], daneJedzenia["kolor"][3]));
+					jedzenie.push_back(jedzeñ);
+				}
+
 				std::vector<sf::RectangleShape> pola;
-				for (const auto& danePola : gracz["pola"]) {
+				for (const auto& danePola : daneGracza.at("pola")) {
 					sf::RectangleShape pole;
 					pole.setPosition(danePola["pozycja"][0], danePola["pozycja"][1]);
 					pole.setSize(sf::Vector2f(danePola["rozmiar"][0], danePola["rozmiar"][1]));
@@ -122,7 +170,7 @@ public:
 				}
 
 				std::vector<sf::RectangleShape> przeszkody;
-				for (const auto& danePrzeszkody : gracz["przeszkody"]) {
+				for (const auto& danePrzeszkody : daneGracza.at("przeszkody")) {
 					sf::RectangleShape przeszkoda;
 					przeszkoda.setPosition(danePrzeszkody["pozycja"][0], danePrzeszkody["pozycja"][1]);
 					przeszkoda.setSize(sf::Vector2f(danePrzeszkody["rozmiar"][0], danePrzeszkody["rozmiar"][1]));
@@ -130,14 +178,6 @@ public:
 					przeszkody.push_back(przeszkoda);
 				}
 
-				std::vector<sf::RectangleShape> jedzenie;
-				for (const auto& daneJedzenia : gracz["jedzenie"]) {
-					sf::RectangleShape jedzeñ;
-					jedzeñ.setPosition(daneJedzenia["pozycja"][0], daneJedzenia["pozycja"][1]);
-					jedzeñ.setSize(sf::Vector2f(daneJedzenia["rozmiar"][0], daneJedzenia["rozmiar"][1]));
-					jedzeñ.setFillColor(sf::Color(daneJedzenia["kolor"][0], daneJedzenia["kolor"][1], daneJedzenia["kolor"][2], daneJedzenia["kolor"][3]));
-					jedzenie.push_back(jedzeñ);
-				}
 				flaga = true;
 				zapisz gracz;
 				gracz.pkt = punkty;
@@ -145,6 +185,9 @@ public:
 				gracz.pole = pola;
 				gracz.przeszkoda = przeszkody;
 				gracz.amam = jedzenie;
+				pole1 = pola;
+				przeszkoda1 = przeszkody;
+				amam1 = jedzenie;
 				return gracz;
 			}
 		}
@@ -165,18 +208,15 @@ public:
 	}
 
 	std::vector<sf::RectangleShape> zapisanePola() {
-		zapisz gracz;
-		return gracz.pole;
+		return pole1;
 	}
 
 	std::vector<sf::RectangleShape> zapisanePrzeszkody() {
-		zapisz gracz;
-		return gracz.przeszkoda;
+		return przeszkoda1;
 	}
 
-	std::vector<sf::RectangleShape> zapisaneJedzenie() {
-		zapisz gracz;
-		return gracz.amam;
+	std::vector<sf::RectangleShape>& zapisaneJedzenie() {
+		return amam1;
 	}
 
 };

@@ -11,6 +11,9 @@ private:
 	//Zmienne do animacji
 	int poczatekSprite;
 	int koniecSprite;
+	int poczatekDucha;
+	int koniecDucha;
+
 
 	//Sprite
 	sf::Sprite Pacman_S;
@@ -28,8 +31,35 @@ private:
 	sf::Text wynik;
 	sf::Font czczionka;
 
+	//Duszek czerwony
+	sf::Sprite duszekCz;
+	sf::Texture teksturaCZ;
+	sf::IntRect ksztaltDuszkaCz;
 
+	//Duszek ró¿owy
+	sf::Sprite duszekR;
+	sf::Texture teksturaR;
+	sf::IntRect ksztaltDuszkaR;
 
+	//Duszek niebieski
+	sf::Sprite duszekN;
+	sf::Texture teksturaN;
+	sf::IntRect ksztaltDuszkaN;
+
+	//Zbiór duszków
+	std::vector<sf::Sprite> duszki;
+
+	//Zmienne do kolizji duszków
+	bool checkCz = false;
+	bool checkR = false;
+	bool checkN = false;
+	int losowaCz;
+	int losowaR;
+	int losowaN;
+	int auaCz;
+	int auaR;
+	int auaN;
+	int kierunek;
 
 public:
 
@@ -37,7 +67,7 @@ public:
 	int punkty = 0;
 
 	//Konstruktor
-	Pacman(int a, int b) {
+	Pacman(int a) {
 		if (!tekstura.loadFromFile("Pacman.png"))
 			std::cerr << "B³¹d";
 		poczatekSprite = 0;
@@ -56,12 +86,42 @@ public:
 		twojwynik.setFont(czczionka);
 		twojwynik.setFillColor(sf::Color::White);
 		twojwynik.setCharacterSize(30);
+		
+		if (!teksturaCZ.loadFromFile("Duszki.png"))
+			std::cerr << "B³¹d";
+		teksturaR.loadFromFile("Duszki.png");
+		teksturaN.loadFromFile("Duszki.png");
+		poczatekDucha = 0;
+		koniecDucha = 50;
+		ksztaltDuszkaCz.height = 40;
+		ksztaltDuszkaCz.width = 40;
+		ksztaltDuszkaCz.top = 0;
+		ksztaltDuszkaCz.left = 0;
+		duszekCz.setTexture(teksturaCZ);
+		duszekCz.setTextureRect(ksztaltDuszkaCz);
+		duszekCz.setPosition(308,248);
+
+		ksztaltDuszkaR.height = 40;
+		ksztaltDuszkaR.width = 40;
+		ksztaltDuszkaR.top = 0;
+		ksztaltDuszkaR.left = 50;
+		duszekR.setTexture(teksturaR);
+		duszekR.setTextureRect(ksztaltDuszkaR);
+		duszekR.setPosition(303, 183);
+
+		ksztaltDuszkaN.height = 40;
+		ksztaltDuszkaN.width = 40;
+		ksztaltDuszkaN.top = 0;
+		ksztaltDuszkaN.left = 100;
+		duszekN.setTexture(teksturaN);
+		duszekN.setTextureRect(ksztaltDuszkaN);
+		duszekN.setPosition(308, 128);
 	}
 
 	//Poruszanie klawiatura
 	void poruszanie(int a, int b) {
-		float velo = 0.1;
-		Plansza plansza(20, 10);
+		float velo = 0.2;
+		Plansza plansza(a, b);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			if (kol != 1 && (bool)(Pacman_S.getPosition().y > (float)plansza.getRamka().getPosition().y) == 1) {
@@ -169,6 +229,183 @@ public:
 
 	}
 
+	void animujDuszka() {
+		sf::Clock duch;
+		if (ksztaltDuszkaCz.top == koniecDucha) {
+			ksztaltDuszkaCz.top = poczatekDucha;
+		}
+		else
+			ksztaltDuszkaCz.top += 50;
+		duszekCz.setTextureRect(ksztaltDuszkaCz);
+		duch.restart();
+	}
+
+	void poruszanieDuszkaCz(int a, int b) {
+		float vel = 1;
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> dist(1, 4);
+		if (checkCz == false) {
+			losowaCz = dist(rng);
+			checkCz = true;
+		}
+		//std::cout << losowa;
+
+		Plansza plansza(a, b);
+		if (losowaCz == 1)
+		{
+			if (auaCz != 1 && (bool)(duszekCz.getPosition().y > (float)plansza.getRamka().getPosition().y) == 1) {
+				duszekCz.move(0, -vel);
+				kierunek++;
+			}
+			else {
+				duszekCz.move(0, 0);
+				checkCz = false;
+			}
+		}
+
+		if (losowaCz == 2)
+		{
+			if (auaCz != 2 && (bool)(duszekCz.getPosition().y < (float)plansza.getRamka().getPosition().y + 60 * b - 40) == 1) {
+				duszekCz.move(0, vel);
+				kierunek++;
+			}
+			else {
+				duszekCz.move(0, 0);
+				checkCz = false;
+			}
+		}
+		if (losowaCz == 3)
+		{
+			if (auaCz != 3 && (bool)(duszekCz.getPosition().x > (float)plansza.getRamka().getPosition().x) == 1) {
+				duszekCz.move(-vel, 0);
+			}
+			else {
+				duszekCz.move(0, 0);
+				checkCz = false;
+			}
+		}
+		if (losowaCz == 4)
+		{
+			if (auaCz != 4 && (bool)(duszekCz.getPosition().x < (float)plansza.getRamka().getPosition().x + 60 * a - 40) == 1) {
+				duszekCz.move(vel, 0);
+			}
+			else {
+				duszekCz.move(0, 0);
+				checkCz = false;
+			}
+		}
+	}
+
+	void poruszanieDuszkaR(int a, int b) {
+		float vel = 0.5;
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> dist(1, 4);
+		if (checkR == false) {
+			losowaR = dist(rng);
+			checkR = true;
+		}
+		//std::cout << losowa;
+
+		Plansza plansza(a, b);
+		if (losowaR == 1)
+		{
+			if (auaR != 1 && (bool)(duszekR.getPosition().y > (float)plansza.getRamka().getPosition().y) == 1) {
+				duszekR.move(0, -vel);
+			}
+			else {
+				duszekR.move(0, 0);
+				checkR = false;
+			}
+		}
+
+		if (losowaR == 2)
+		{
+			if (auaR != 2 && (bool)(duszekR.getPosition().y < (float)plansza.getRamka().getPosition().y + 60 * b - 40) == 1) {
+				duszekR.move(0, vel);
+			}
+			else {
+				duszekR.move(0, 0);
+				checkR = false;
+			}
+		}
+		if (losowaR == 3)
+		{
+			if (auaR != 3 && (bool)(duszekR.getPosition().x > (float)plansza.getRamka().getPosition().x) == 1) {
+				duszekR.move(-vel, 0);
+			}
+			else {
+				duszekR.move(0, 0);
+				checkR = false;
+			}
+		}
+		if (losowaR == 4)
+		{
+			if (auaR != 4 && (bool)(duszekR.getPosition().x < (float)plansza.getRamka().getPosition().x + 60 * a - 40) == 1) {
+				duszekR.move(vel, 0);
+			}
+			else {
+				duszekR.move(0, 0);
+				checkR = false;
+			}
+		}
+	}
+	void poruszanieDuszkaN(int a, int b) {
+		float vel = 1;
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> dist(1, 4);
+		if (checkN == false) {
+			losowaN = dist(rng);
+			checkN = true;
+		}
+		//std::cout << losowa;
+
+		Plansza plansza(a, b);
+		if (losowaN == 1)
+		{
+			if (auaN != 1 && (bool)(duszekN.getPosition().y > (float)plansza.getRamka().getPosition().y) == 1) {
+				duszekN.move(0, -vel);
+			}
+			else {
+				duszekN.move(0, 0);
+				checkN = false;
+			}
+		}
+
+		if (losowaN == 2)
+		{
+			if (auaN != 2 && (bool)(duszekN.getPosition().y < (float)plansza.getRamka().getPosition().y + 60 * b - 40) == 1) {
+				duszekN.move(0, vel);
+			}
+			else {
+				duszekN.move(0, 0);
+				checkN = false;
+			}
+		}
+		if (losowaN == 3)
+		{
+			if (auaN != 3 && (bool)(duszekN.getPosition().x > (float)plansza.getRamka().getPosition().x) == 1) {
+				duszekN.move(-vel, 0);
+			}
+			else {
+				duszekCz.move(0, 0);
+				checkN = false;
+			}
+		}
+		if (losowaN == 4)
+		{
+			if (auaN != 4 && (bool)(duszekN.getPosition().x < (float)plansza.getRamka().getPosition().x + 60 * a - 40) == 1) {
+				duszekN.move(vel, 0);
+			}
+			else {
+				duszekN.move(0, 0);
+				checkN = false;
+			}
+		}
+	}
+
 	//Zwracanie wektora (kiedyœ losowej) pozycji pocz¹tkowej Pacmana
 	sf::Vector2f pozycjaPacmana() {
 		/*std::vector<sf::Vector2f> polapocz¹tkowe;
@@ -210,6 +447,43 @@ public:
 				kol = 3;
 			if (klawisz == 4)
 				kol = 4;
+		}
+	}
+
+	void kolizjaDuszkaCz(const sf::Sprite& duszek, const sf::RectangleShape& przeszkoda) {
+		if (sprawdzenieKolizji(duszek, przeszkoda)) {
+			if (losowaCz == 1)
+				auaCz = 1;
+			if (losowaCz == 2)
+				auaCz = 2;
+			if (losowaCz == 3)
+				auaCz = 3;
+			if (losowaCz == 4)
+				auaCz = 4;
+		}
+	}
+	void kolizjaDuszkaR(const sf::Sprite& duszek, const sf::RectangleShape& przeszkoda) {
+		if (sprawdzenieKolizji(duszek, przeszkoda)) {
+			if (losowaR == 1)
+				auaR = 1;
+			if (losowaR == 2)
+				auaR = 2;
+			if (losowaR == 3)
+				auaR = 3;
+			if (losowaR == 4)
+				auaR = 4;
+		}
+	}
+	void kolizjaDuszkaN(const sf::Sprite& duszek, const sf::RectangleShape& przeszkoda) {
+		if (sprawdzenieKolizji(duszek, przeszkoda)) {
+			if (losowaN == 1)
+				auaN = 1;
+			if (losowaN == 2)
+				auaN = 2;
+			if (losowaN == 3)
+				auaN = 3;
+			if (losowaN == 4)
+				auaN = 4;
 		}
 	}
 
@@ -259,6 +533,26 @@ public:
 		return os.str();
 	}
 
-	
+	sf::Sprite getDuszekCz() {
+		return duszekCz;
+	}
+
+	sf::Sprite getDuszekR() {
+		return duszekR;
+	}
+
+	sf::Sprite getDuszekN() {
+		return duszekN;
+	}
+
+	void czekaj(int milisekundy) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(milisekundy));
+	}
+
+	void zeruj() {
+		checkCz = false;
+		checkR = false;
+		checkN = false;
+	}
 };
 

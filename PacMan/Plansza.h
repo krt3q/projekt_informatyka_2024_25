@@ -42,8 +42,14 @@ public:
 					pole.setSize(sf::Vector2f(60, 60));
 					pole.setPosition(3 + j * 60, 123 + i * 60);
 					pole.setFillColor(sf::Color::Cyan);
-					pola.push_back(pole);
-					przeszkoda.push_back(pole);
+					if (i==0 && j == 0) {
+						pole.setFillColor(sf::Color::Transparent);
+						pola.push_back(pole);
+					}
+					else {
+						przeszkoda.push_back(pole);
+						pola.push_back(pole);
+					}
 				}
 				else {
 					sf::RectangleShape pole;
@@ -59,7 +65,6 @@ public:
 				}
 			}
 		}
-		pola[0].setFillColor(sf::Color::Transparent);
 	}
 
 	//Zwracanie planszy
