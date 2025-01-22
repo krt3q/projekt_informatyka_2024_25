@@ -2,6 +2,7 @@
 #include "Interfejs.h"
 #include <vector>
 #include <iostream>
+#include "zapis.h"
 
 class Ustawienia
 {
@@ -18,6 +19,7 @@ private:
 
 	int flaga;
 
+	//Tu bêdzie duszek
 	sf::Sprite Duszek;
 	sf::Texture tekstura;
 	sf::Clock zegar;
@@ -25,6 +27,7 @@ private:
 	int poczatekSprite = 0;
 	int koniecSprite = 100;
 
+	//Opis pól i przycisku exit
 	std::vector<sf::RectangleShape> pola;
 	sf::RectangleShape poziom;
 	sf::RectangleShape gracze;
@@ -32,28 +35,29 @@ private:
 
 	sf::Font czcionka;
 
-	/*sf::Sprite tekst;*/
-	sf::Texture tekst;
-	sf::Clock zegar2;
-
+	//Napisy
 	std::vector<sf::Text> napisy;
 	sf::Text textP;
 	sf::Text textG;
 
-
+	//Krzy¿yk
 	sf::ConvexShape krzy¿;
 	sf::IntRect cofka;
-	sf::RectangleShape test;
+	//sf::RectangleShape test;
+
 
 	sf::Text stopien;
 	
 	int level;
+	std::string nazwaGracza;
+
 
 public:
 
 	//Konstruktor
 	Ustawienia(int d) {
 
+		zapis zapis(1);
 		cofka.top = 0;
 		cofka.left = 0;
 		cofka.height = 70;
@@ -77,6 +81,8 @@ public:
 		if (!czcionka.loadFromFile("britanic.ttf")) {
 			std::cerr << "B³¹d";
 		}
+
+		//Tworzenie pól tekstowych
 		parametr1 = 0;
 		pola.push_back(poziom);
 		pola.push_back(gracze);
@@ -88,12 +94,7 @@ public:
 			parametr1 += 1;
 		}
 
-		/*tekst.setPosition(sf::Vector2f(300, 150));
-		teks.loadFromFile("wordart.png");
-		tekst.setTexture(teks);
-		tekst.setScale(0.5, 0.5);
-		tekst.setOrigin((sf::Vector2f)teks.getSize() / 2.f);*/
-
+		//Tworzenie napisów
 		textP.setString("Poziom trudnosci: ");
 		textG.setString("Wybierz gracza: ");
 		napisy.push_back(textP);
@@ -150,7 +151,27 @@ public:
 			if (flaga == 0 && pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))) && a == 1) {
 				okno = 0;
 				flaga = 1;
-				std::cout << "Wybierz gracza z poni¿szych (wpisujac odpowiednia cyfre): ";
+				std::cout << "Wybierz gracza z ponizszych (wpisujac jego nick): \n";
+
+				std::ifstream plik("dane.json");
+				if (!plik.is_open()) {
+					std::cerr << "Nie mozna otworzyc pliku!";
+				}
+
+				json stanGry;
+				plik >> stanGry;
+				plik.close();
+
+
+				if (!stanGry.contains("Gracz") || !stanGry["Gracz"].is_array()) {
+					stanGry["Gracz"] = json::array();
+				}
+				for (const std::string gracze : stanGry["Gracz"]) {
+					std::cout << gracze[0]["Gracz"] << std::endl;
+					std::cout << 1;
+				}
+
+				std::cin >> nazwaGracza;
 				
 			}
 			while (flaga == 1) {
@@ -219,7 +240,13 @@ public:
 		return krzy¿;
 	}
 
+	//Zwracanie int level
 	int getLevel() {
 		return level;
+	}
+
+	//Zwracanie gracza
+	std::string getGracz(){
+		return nazwaGracza;
 	}
 };

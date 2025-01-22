@@ -82,6 +82,7 @@ public:
 		return amam;
 	}
 
+	//Kontrola wygranej
 	int kontrolaWygranej() {
 		bool przegrana=false;
 		for (const auto& jedzenie : getJedzenie()) {

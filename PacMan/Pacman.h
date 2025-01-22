@@ -49,7 +49,7 @@ public:
 		ksztaltPacmana.left = 0;
 		Pacman_S.setTextureRect(ksztaltPacmana);
 		Pacman_S.setTexture(tekstura);
-		Pacman_S.setPosition(pozycjaPacmana(a, b));
+		Pacman_S.setPosition(pozycjaPacmana());
 		twojwynik.setPosition(10, 10);
 		czczionka.loadFromFile("BRITANIC.TTF");
 		twojwynik.setString("Twoj wynik: ");
@@ -169,8 +169,8 @@ public:
 
 	}
 
-	//Zwracanie wektora losowej pozycji pocz¹tkowej Pacmana
-	sf::Vector2f pozycjaPacmana(int a, int b) {
+	//Zwracanie wektora (kiedyœ losowej) pozycji pocz¹tkowej Pacmana
+	sf::Vector2f pozycjaPacmana() {
 		/*std::vector<sf::Vector2f> polapocz¹tkowe;
 		Plansza plansza(a, b);
 		for (const auto& pole : plansza.getPlansza()) {
@@ -224,6 +224,12 @@ public:
 		}
 	}
 
+	//Zwracanie liczby punktów
+	int getPunkty() {
+		return punkty;
+	}
+
+	//Zerowanie punktów
 	void zerujPunkty() {
 		punkty = 0;
 	}
@@ -254,20 +260,5 @@ public:
 	}
 
 	
-	/*sf::Sprite getWygrana(sf::RenderWindow& window) {
-		sf::Clock zegarW;
-		sf::Sprite winek;
-		sf::Texture wygrana;
-		winek.setPosition(sf::Vector2f(400, 500));
-		wygrana.loadFromFile("wordart2.png");
-		winek.setTexture(wygrana);
-		winek.setScale(0.5, 0.5);
-		winek.setOrigin(400, 300);
-		if (zegarW.getElapsedTime().asMilliseconds() > 100.0f) {
-			tekst.rotate(10);
-			zegarW.restart();
-		}
-		return winek;
-	}*/
 };
 

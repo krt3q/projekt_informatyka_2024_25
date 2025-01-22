@@ -33,6 +33,7 @@ private:
 	sf::RectangleShape exit;
 	sf::RectangleShape zapis;
 
+	//Czcionka
 	sf::Font czycionka;
 
 	//Wordart
@@ -52,6 +53,7 @@ private:
 	sf::Texture wygrana;
 public:
 
+	//Konstruktor
 	Interfejs(int d) {
 		if (!czycionka.loadFromFile("britanic.ttf")) {
 			std::cerr << "B³¹d";
@@ -90,6 +92,7 @@ public:
 				a = b;
 		}
 
+		//Próba otwarcia pliku
 		if (!tekstura.loadFromFile("Pacman.png"))
 			std::cerr << "B³¹d";
 		klatki.height = 40;
@@ -108,12 +111,15 @@ public:
 		winek.setTexture(wygrana);
 		winek.setScale(0.5, 0.5);
 	}
+	
+	//Kolizja myszki z bloczkami
 	void kolizja(sf::RenderWindow& window) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (pola[0].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
 				okno = 1;
 			}
 			if (pola[1].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
+				if(a!=2)
 				okno = 2;
 			}
 			if (pola[2].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)))) {
@@ -129,14 +135,17 @@ public:
 		}
 	}
 
-
-
+	//Zwracanie napisów
 	std::vector<sf::Text> getTekst() {
 		return napisy;
 	}
+
+	//Zwracanie pól tekstowych
 	std::vector<sf::RectangleShape> getPola() {
 		return pola;
 	}
+
+	//Zwracanie numeru okna, które ma byæ otwarte
 	int getOkna(sf::RenderWindow& window){
 		Ustawienia ustawienia(5);
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -146,6 +155,8 @@ public:
 		}
 		return okno;
 	}
+
+	//Rysowanie pacmana w menu
 	sf::Sprite getPacman() {
 		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {
 			if (klatki.top == koniecSprite) {
@@ -158,6 +169,8 @@ public:
 		}
 		return Pacman;
 	}
+
+	//Tworzenie tekstu z wordarta, który siê obraca
 	sf::Sprite napis() {
 		if (zegar1.getElapsedTime().asMilliseconds() > 100.0f) {
 			tekst.rotate(10);
@@ -165,6 +178,8 @@ public:
 		}
 		return tekst;
 	}
+
+	//Zwraca wordarta z okazji wygranej
 	sf::Sprite getWygrana() {
 		winek.setOrigin((sf::Vector2f)wygrana.getSize() / 2.f);
 
@@ -175,8 +190,13 @@ public:
 		return winek;
 	}
 
+	//Zwraca tylko numer okna, które ma byæ otwarte
 	int getOkna_tylkoINT() {
 		return okno;
+	}
+
+	void setOkno() {
+		okno = 0;
 	}
 };
 
