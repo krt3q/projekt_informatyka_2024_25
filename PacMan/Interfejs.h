@@ -162,6 +162,10 @@ public:
 		return okno;
 	}
 
+	void setOkna(int a) {
+		okno = a;
+	}
+
 	//Rysowanie pacmana w menu
 	sf::Sprite getPacman() {
 		if (zegar.getElapsedTime().asMilliseconds() > 150.0f) {

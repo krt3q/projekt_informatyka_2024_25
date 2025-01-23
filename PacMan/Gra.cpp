@@ -72,6 +72,9 @@ int main()
 	//Konstruktor zapisu
 	zapis zapis(1);
 
+	//Konstruktor pomocy
+	Pomoc help(1);
+
 	//Przegrana okno
 	int okno = 0;
 
@@ -145,7 +148,7 @@ int main()
 		}
 		
 		//Okno gry
-		if (interfejs.getOkna(window) == 1 && flaga != 1 && okno != 1) {
+		if (interfejs.getOkna(window) == 1 && flaga != 1 && okno != 1 &&pomoc==false) {
 			window.clear();
 
 			//Inicjacja - tworzenie parametrów
@@ -170,11 +173,10 @@ int main()
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1) || pomoc == true) {
 				pomoc = true;
-				window.clear(sf::Color(245, 66, 239));
 			}
 
 			//Pauza
-			while (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || pauza == 1) {
+			while (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || pauza == 1) {
 				pauza = 1;
 				int* opcja = new int;
 				std::cout << "Kontynuuj [1]\n";
@@ -393,7 +395,17 @@ int main()
 			window.draw(ustawienia.getPacman());
 			window.draw(ustawienia.getX());
 		}
-			
+		if (pomoc == true) {
+			window.clear(sf::Color(245, 66, 239));
+			window.draw(help.getRamka());
+			window.draw(help.getDekoracje());
+			for (const auto& tekœcik : help.getTekst()) {
+				window.draw(tekœcik);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				pomoc = false;
+			}
+		}
 		
 		window.display();
 	}
