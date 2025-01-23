@@ -70,6 +70,8 @@ int main()
 	//Konstruktor zapisu
 	zapis zapis(1);
 
+	//Przegrana okno
+	int okno = 0;
 
 	struct zapisz {
 		int punktyZ;
@@ -101,6 +103,7 @@ int main()
 			inicjacja == false;
 			interfejs.setOkno();
 			flaga = 0;
+			okno = 0;
 			wyczyœæKonsolê();
 			//Poziom trudnoœci nastawia odpowiednie parametry
 			if (ustawienia.getLevel() == 1) {
@@ -142,7 +145,7 @@ int main()
 		}
 		
 		//Okno gry
-		if (interfejs.getOkna(window) == 1 && flaga != 1) {
+		if (interfejs.getOkna(window) == 1 && flaga != 1 && okno != 1) {
 			window.clear();
 
 			//Inicjacja - tworzenie parametrów
@@ -238,17 +241,7 @@ int main()
 				if (ustawienia.getLevel() == 3) {
 					for (const auto& duszek : pacman->getDuszki()) {
 						if (pacman->przegrana(pacman->getPacman(), duszek, window) == 1) {
-							//window.draw(pacman->koniec());
-							while (true) {
-								window.draw(pacman->koniec()); 
-								int koniec;
-								std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
-								std::cin >> koniec;
-								if (koniec == 1) {
-									flaga = 1;
-									break;
-								}
-							}
+							okno = 1;
 						}
 					}
 					window.draw(pacman->getDuszekCz());
@@ -259,20 +252,7 @@ int main()
 
 				if (ustawienia.getLevel() == 2) {
 					if (pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window)) {
-						pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window);
-						while (true) {
-							if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-								while (true) {
-									int koniec;
-									std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
-									std::cin >> koniec;
-									if (koniec == 1) {
-										flaga = 1;
-										break;
-									}
-								}
-							}
-						}
+								okno = 1;
 					}
 					window.draw(pacman->getDuszekCz());
 				}
@@ -324,16 +304,7 @@ int main()
 				if (ustawienia.getLevel() == 3) {
 					for (const auto& duszek : pacman->getDuszki()) {
 						if (pacman->przegrana(pacman->getPacman(), duszek, window) == 1) {
-							pacman->przegrana(pacman->getPacman(), duszek, window);
-							while (true) {
-								int koniec;
-								std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
-								std::cin >> koniec;
-								if (koniec == 1) {
-									flaga = 1;
-									break;
-								}
-							}
+							okno = 1;
 						}
 					}
 					window.draw(pacman->getDuszekCz());
@@ -342,21 +313,8 @@ int main()
 				}
 				if (ustawienia.getLevel() == 2) {
 					if (pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window)) {
-						pacman->przegrana(pacman->getPacman(), pacman->getDuszekCz(), window);
-						while (true) {
-							if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-								while (true) {
-									int koniec;
-									std::cout << "Przegra³eœ, aby skonczyc wcisnij 1\n";
-									std::cin >> koniec;
-									if (koniec == 1) {
-										flaga = 1;
-										break;
-									}
-								}
-							}
+						okno = 1;
 						}
-					}
 					window.draw(pacman->getDuszekCz());
 				}
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -424,6 +382,12 @@ int main()
 			window.draw(ustawienia.getX());
 			window.draw(ustawienia.getDuszek());
 			window.draw(ustawienia.poziomT(window));
+		}
+		if (okno == 1) {
+			window.clear(sf::Color(168, 50, 64));
+			ustawienia.kolizja(window, 0);
+			window.draw(ustawienia.getPacman());
+			window.draw(ustawienia.getX());
 		}
 			
 		

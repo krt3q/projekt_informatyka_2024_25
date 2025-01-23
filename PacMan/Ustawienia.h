@@ -52,6 +52,14 @@ private:
 	std::string nazwaGracza;
 
 
+	//Pora¿ka
+	sf::Sprite pacmanPor;
+	sf::Texture teksturaPor;
+	sf::Clock zegarPrz;
+	sf::IntRect klatkiPor;
+	int poczatekSpritePor = 0;
+	int koniecSpritePor = 550;
+
 public:
 
 	//Konstruktor
@@ -117,6 +125,16 @@ public:
 		Duszek.setTexture(tekstura);
 		Duszek.setTextureRect(klatki);
 		Duszek.setScale(sf::Vector2f(10, 10));
+
+		klatkiPor.height = 40;
+		klatkiPor.width = 40;
+		klatkiPor.top = 0;
+		klatkiPor.left = 5;
+		pacmanPor.setPosition(sf::Vector2f(500, 300));
+		teksturaPor.loadFromFile("przegranAnimacja.png");
+		pacmanPor.setTexture(teksturaPor);
+		pacmanPor.setTextureRect(klatkiPor);
+		pacmanPor.setScale(sf::Vector2f(10, 10));
 	}
 
 	//Kolizja ze wszystkim
@@ -241,6 +259,19 @@ public:
 			zegar.restart();
 		}
 		return Duszek;
+	}
+
+	sf::Sprite getPacman() {
+		if (zegarPrz.getElapsedTime().asMilliseconds() > 200.0f) {
+			if (klatkiPor.top == koniecSpritePor) {
+				klatkiPor.top = poczatekSpritePor;
+			}
+			else
+				klatkiPor.top += 50;
+			pacmanPor.setTextureRect(klatkiPor);
+			zegarPrz.restart();
+		}
+		return pacmanPor;
 	}
 
 	bool czyPlikjestPusty(const std::string& nazwaPliku) {
