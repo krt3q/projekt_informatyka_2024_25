@@ -154,6 +154,7 @@
     <ClInclude Include="Nagłówek.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Plansza.h" />
+    <ClInclude Include="Pomoc.h" />
     <ClInclude Include="Przeszkoda.h" />
     <ClInclude Include="Ustawienia.h" />
     <ClInclude Include="zapis.h" />

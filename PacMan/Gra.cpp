@@ -13,7 +13,7 @@
 #include "Ustawienia.h"
 #include "Krzy¿yk.h"
 #include "zapis.h"
-
+#include "pomoc.h"
 
 
 void wyczyœæKonsolê() {
@@ -25,7 +25,7 @@ void wyczyœæKonsolê() {
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1300, 1000), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(1300, 1000), "Pacman");
 	sf::Event event;
 
 	//Cyferki do planszy i pacmana
@@ -45,6 +45,8 @@ int main()
 	int pauza = 0;
 	int nadpis = 0;
 	int oknoZ = 0;
+	bool pomoc = false;
+	bool marker = false;
 
 	//Zmienna inicjuj¹ca - funkcja/pêtla wykonuje siê tylko raz
 	bool inicjacja = false;
@@ -81,8 +83,6 @@ int main()
 		std::vector<sf::RectangleShape> jedzenieZ;
 	} gracz;
 	
-
-
 
 
 
@@ -167,6 +167,10 @@ int main()
 					b = 10;
 				}
 				inicjacja=true;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1) || pomoc == true) {
+				pomoc = true;
+				window.clear(sf::Color(245, 66, 239));
 			}
 
 			//Pauza
